@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './assets/scss/app.scss'
-import Album from './components/Album'
-import Albums from './components/Albums'
+import Album from './components/albums/Album'
+import Albums from './components/albums/Albums'
 import AuthContextProvider from './contexts/AuthContext'
 import Frontpage from './components/Frontpage'
 import Login from './components/Authentication/Login'
@@ -15,50 +15,50 @@ import Upload from './components/upload/Upload'
 
 function App() {
   return (
-    <Router>
-      <AuthContextProvider>
-        <Navigation />
+	<Router>
+		<AuthContextProvider>
+		<Navigation />
 
-        <Routes>
-          <Route path="/">
-            <Frontpage />
-          </Route>
-          
-          <Route path="/register">
-            <Register />
-          </Route>
+			<Routes>
+				<Route path="/">
+					<Frontpage />
+				</Route>
+				
+				<Route path="/register">
+					<Register />
+				</Route>
 
-          <Route path="/login">
-            <Login />
-          </Route>
+				<Route path="/login">
+					<Login />
+				</Route>
 
-          <ProtectedRoute path="/logout">
-            <Logout />
-          </ProtectedRoute>
+				<ProtectedRoute path="/logout">
+					<Logout />
+				</ProtectedRoute>
 
-          <ProtectedRoute path="/profile">
-            <Profile />
-          </ProtectedRoute>
+				<ProtectedRoute path="/profile">
+					<Profile />
+				</ProtectedRoute>
 
-          <ProtectedRoute path="/albums">
-            <Route path="/">
-              <Albums />
-            </Route>
+				<ProtectedRoute path="/albums">
+					<Route path="/">
+						<Albums />
+					</Route>
 
-            <Route path="/:albumId">
-              <Album />
-						</Route>
-          </ProtectedRoute>
+					<Route path="/:albumId">
+						<Album />
+					</Route>
+				</ProtectedRoute>
 
-          <ProtectedRoute path="/upload">
-            <Upload />
-          </ProtectedRoute>
+				<ProtectedRoute path="/upload">
+					<Upload />
+				</ProtectedRoute>
 
-          <Route path="*" element={<NotFound />} />
+				<Route path="*" element={<NotFound />} />
 
-        </Routes>
-      </AuthContextProvider>
-    </Router>
+			</Routes>
+		</AuthContextProvider>
+	</Router>
 
 
   );
