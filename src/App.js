@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './assets/scss/app.scss'
+import Album from './components/Album'
 import Albums from './components/Albums'
 import AuthContextProvider from './contexts/AuthContext'
 import Frontpage from './components/Frontpage'
@@ -10,7 +11,7 @@ import NotFound from './components/NotFound'
 import Profile from './components/Profile'
 import ProtectedRoute from './components/Authentication/ProtectedRoute'
 import Register from './components/Authentication/Register'
-import Upload from './components/Upload'
+import Upload from './components/upload/Upload'
 
 function App() {
   return (
@@ -39,11 +40,17 @@ function App() {
             <Profile />
           </ProtectedRoute>
 
-          <ProtectedRoute path="/Albums">
-            <Albums />
+          <ProtectedRoute path="/albums">
+            <Route path="/">
+              <Albums />
+            </Route>
+
+            <Route path="/:albumId">
+              <Album />
+						</Route>
           </ProtectedRoute>
 
-          <ProtectedRoute path="/Upload">
+          <ProtectedRoute path="/upload">
             <Upload />
           </ProtectedRoute>
 

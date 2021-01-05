@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Upload = () => {
+const Albums = () => {
     return (
         <div>
-            Here will be upload
+            Here will be album
         </div>
     )
 }
 
-export default Upload
+export default Albums

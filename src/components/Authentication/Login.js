@@ -21,7 +21,7 @@ const Login = () => {
 			setLoading(true);
 			await login(emailRef.current.value, passwordRef.current.value);
 			
-			navigate('/');
+			navigate('/albums');
 		} catch (err) {
 			setError("Could not log in. Please try again.");
 			setLoading(false);
