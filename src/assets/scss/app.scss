@@ -6,3 +6,23 @@ body {
     background-color: #fff;
     color: #333;
 }
+
+// Frontpage Styling
+.frontpage-wrapper {
+    background: linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) ), url('../images/photo-background2.jpg');
+    background-size: cover;
+    background-position: center;
+    background-color: #333;
+    color: #fff;
+
+    height: 95vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    .frontpage-content {
+        text-align: center;
+        margin: 1.5em;
+    }
+}
