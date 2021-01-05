@@ -8,11 +8,17 @@ const useAuthContext = () => {
 }
 
 const AuthContextProvider = (props) => {
+    const login = (email, password) => {
+        // sign in user
+        return auth.signInWithEmailAndPassword(email, password);
+    }
+    
     const register = (email, password) => {
         return auth.createUserWithEmailAndPassword(email, password)
     }
-
+    
     const values = {
+        login,
         register
     }
 
