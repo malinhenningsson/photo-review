@@ -8,6 +8,7 @@ import Logout from './components/Logout'
 import Navigation from './components/Navigation'
 import NotFound from './components/NotFound'
 import Profile from './components/Profile'
+import ProtectedRoute from './components/ProtectedRoute'
 import Register from './components/Register'
 import Upload from './components/Upload'
 
@@ -30,21 +31,21 @@ function App() {
             <Login />
           </Route>
 
-          <Route path="/logout">
+          <ProtectedRoute path="/logout">
             <Logout />
-          </Route>
+          </ProtectedRoute>
 
-          <Route path="/profile">
+          <ProtectedRoute path="/profile">
             <Profile />
-          </Route>
+          </ProtectedRoute>
 
-          <Route path="/Albums">
+          <ProtectedRoute path="/Albums">
             <Albums />
-          </Route>
+          </ProtectedRoute>
 
-          <Route path="/Upload">
+          <ProtectedRoute path="/Upload">
             <Upload />
-          </Route>
+          </ProtectedRoute>
 
           <Route path="*" element={<NotFound />} />
 

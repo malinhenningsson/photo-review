@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { Navbar, Nav } from 'react-bootstrap'
+import { useAuthContext } from '../contexts/AuthContext'
 
 const Navigation = () => {
-    const [currentUser, setCurrentUser] = useState(true);
+    const { authUser } = useAuthContext();
 
     return (
         <Navbar collapseOnSelect expand="lg" variant="light">
@@ -14,7 +15,7 @@ const Navigation = () => {
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="ml-auto">
                         {
-                            currentUser 
+                            authUser 
                             ? (
                                 <>
                                     <NavLink to="/Profile" className="nav-link">Profile</NavLink>

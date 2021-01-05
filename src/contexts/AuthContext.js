@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { auth } from '../firebase';
 
 const AuthContext = createContext();
@@ -8,23 +8,37 @@ const useAuthContext = () => {
 }
 
 const AuthContextProvider = (props) => {
+    const [authUser, setAuthUser] = useState(null);
+	const [loading, setLoading] = useState(true);
+
     const login = (email, password) => {
-        // sign in user
         return auth.signInWithEmailAndPassword(email, password);
     }
     
     const register = (email, password) => {
         return auth.createUserWithEmailAndPassword(email, password)
     }
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged(user => {
+			// Auth state changed, by user logging in or out
+            setAuthUser(user);
+            setLoading(false);
+        })
+        
+        return unsubscribe;
+    }, []);
     
     const values = {
+        authUser,
+        loading,
         login,
         register
     }
 
     return (
         <AuthContext.Provider value={values}>
-            {props.children}
+            {!loading && props.children}
         </AuthContext.Provider>
     )
 }
