@@ -4,7 +4,7 @@ import { Navbar, Nav } from 'react-bootstrap'
 
 const Navigation = () => {
     return (
-        <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
+        <Navbar collapseOnSelect expand="lg" variant="light">
             <Link to="/" className="navbar-brand">
                 Photo Review 📸
             </Link>
