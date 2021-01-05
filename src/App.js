@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './assets/scss/app.scss'
 import Albums from './components/Albums'
+import AuthContextProvider from './contexts/AuthContext'
 import Frontpage from './components/Frontpage'
 import Login from './components/Login'
 import Logout from './components/Logout'
@@ -13,6 +14,7 @@ import Upload from './components/Upload'
 function App() {
   return (
     <Router>
+      <AuthContextProvider>
         <Navigation />
 
         <Routes>
@@ -47,6 +49,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
 
         </Routes>
+      </AuthContextProvider>
     </Router>
 
 
