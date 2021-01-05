@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { Navbar, Nav } from 'react-bootstrap'
 
 const Navigation = () => {
+    const [currentUser, setCurrentUser] = useState(true);
+
     return (
         <Navbar collapseOnSelect expand="lg" variant="light">
             <Link to="/" className="navbar-brand">
@@ -11,8 +13,22 @@ const Navigation = () => {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="ml-auto">
-                        <NavLink to="/login" className="nav-link">Log In</NavLink>
-                        <NavLink to="/register" className="nav-link">Sign Up</NavLink>
+                        {
+                            currentUser 
+                            ? (
+                                <>
+                                    <NavLink to="/Profile" className="nav-link">Profile</NavLink>
+                                    <NavLink to="/albums" className="nav-link">Albums</NavLink>
+                                    <NavLink to="/upload" className="nav-link">Upload</NavLink>
+                                    <NavLink to="/logout" className="nav-link">Log Out</NavLink>
+                                </>
+                            ) : (
+                                <>
+                                    <NavLink to="/login" className="nav-link">Log In</NavLink>
+                                    <NavLink to="/register" className="nav-link">Sign Up</NavLink>
+                                </>
+                            )
+                        }
                     </Nav>
                 </Navbar.Collapse>
         </Navbar>
