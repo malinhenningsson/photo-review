@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Spinner } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
-import { useAuthContext } from '../contexts/AuthContext'
+import { useAuthContext } from '../../contexts/AuthContext'
 
 const Logout = () => {
     const { logout } = useAuthContext();
