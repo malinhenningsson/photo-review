@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './assets/scss/app.scss'
 import Frontpage from './components/Frontpage'
+import Login from './components/Login'
 import Navigation from './components/Navigation'
 import Register from './components/Register'
 
@@ -16,6 +17,10 @@ function App() {
           
           <Route path="/register">
             <Register />
+          </Route>
+
+          <Route path="/login">
+            <Login />
           </Route>
 
         </Routes>

@@ -9,19 +9,14 @@ const Register = () => {
     const usernameRef = useRef();
 
 	return (
-		<>
-			<Row>
+		<div className="form-wrapper">
+			<Row className="m-0">
 				<Col md={{ span: 6, offset: 3}}>
-					<Card>
+					<Card bg="dark" text="white">
 						<Card.Body>
-							<Card.Title>Sign Up</Card.Title>
+							<Card.Title className="text-center">Sign Up</Card.Title>
 
 							<Form>
-								<Form.Group id="username">
-									<Form.Label>Username</Form.Label>
-									<Form.Control type="text" ref={usernameRef} required />
-								</Form.Group>
-
 								<Form.Group id="email">
 									<Form.Label>Email</Form.Label>
 									<Form.Control type="email" ref={emailRef} required />
@@ -37,7 +32,7 @@ const Register = () => {
 									<Form.Control type="password" ref={passwordConfirmRef} required />
 								</Form.Group>
 
-								<Button type="submit">Sign Up</Button>
+								<Button variant="light" type="submit" className="mt-3">Sign Up</Button>
 							</Form>
 						</Card.Body>
 					</Card>
@@ -47,7 +42,7 @@ const Register = () => {
 				</Col>
 			</Row>
 
-		</>
+		</div>
 	)
 }
 
