@@ -14,6 +14,10 @@ const AuthContextProvider = (props) => {
     const login = (email, password) => {
         return auth.signInWithEmailAndPassword(email, password);
     }
+
+    const logout = () => {
+		return auth.signOut();
+	}
     
     const register = (email, password) => {
         return auth.createUserWithEmailAndPassword(email, password)
@@ -33,6 +37,7 @@ const AuthContextProvider = (props) => {
         authUser,
         loading,
         login,
+        logout,
         register
     }
 
