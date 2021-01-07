@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
-import { Button, Spinner, Col, Container, Card, Row } from 'react-bootstrap'
+import { Alert, Button, Spinner, Col, Container, Card, Row } from 'react-bootstrap'
 import { useParams, useNavigate } from 'react-router-dom'
 import useGetAlbum from '../../hooks/useGetAlbum'
 import PhotoUpload from '../upload/PhotoUpload'
-import {SRLWrapper} from "simple-react-lightbox";
+import {SRLWrapper} from "simple-react-lightbox"
+import { db } from '../../firebase'
+import { useAuthContext } from '../../contexts/AuthContext'
 
 const Album = () => {
     const [uploadNewPhotos, setUploadNewPhotos] = useState(false);
@@ -11,6 +13,9 @@ const Album = () => {
     const { albumId } = useParams();
     const {album, photos, loading} = useGetAlbum(albumId);
     const navigate = useNavigate();
+    const [loadingNewAlbum, setLoadingNewAlbum] = useState(false);
+    const [error, setError] = useState(false);
+    const { authUser } = useAuthContext();
 
     const updateSelectedPhotos = (e) => {
         let photoArray = [];
@@ -31,6 +36,37 @@ const Album = () => {
             })
             setSelectedPhotos(filteredArray)
         }
+    }
+
+    const handleCreateNewAlbum = async () => {
+        const title = prompt('New album title:');
+
+        if (title.length < 3) {
+            setError('Title must be at least 3 chars.')
+            return; 
+        };
+
+        setError(false);
+        setLoadingNewAlbum(true);
+
+        try {
+            const docRef = await db.collection('albums').add({
+                title,
+                owner: authUser.uid
+            });
+
+            await selectedPhotos.forEach(photo => {
+                db.collection('images').doc(photo).update({
+                    album: db.collection('albums').doc(docRef.id)
+                })
+            })
+
+            navigate(`/albums`);
+        } catch (err) {
+            setError(err.message);
+            setLoadingNewAlbum(false);
+        }
+
     }
 
     return (
@@ -77,7 +113,7 @@ const Album = () => {
                                                 className="mr-2" 
                                                 onChange={updateSelectedPhotos}
                                                 />
-                                            <label for="selected-photo">Select</label>
+                                            <label htmlFor="selected-photo">Select</label>
                                         </Card.Body>
                                     </Card>
                                 </Col>
@@ -92,9 +128,14 @@ const Album = () => {
                     <div className="text-center mt-3">
                         <p>Selected photos: {selectedPhotos.length}</p>
                         <div className="d-flex justify-content-center">
-                            <Button variant="dark" className="mr-3">Create new album</Button>
+                            <Button variant="dark" className="mr-3" onClick={handleCreateNewAlbum}>Create new album</Button>
                             <Button variant="danger">Delete photos</Button>
                         </div>
+                        {
+                            error && (
+                                <Alert variant="danger">{error}</Alert>
+                            )
+                        }
                     </div>
                 )
             }
