@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import { Spinner, Col, Container, Card, Row } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
 import useGetAlbum from '../../hooks/useGetAlbum'
