@@ -6,7 +6,6 @@ const useGetAlbum = (albumId) => {
     const [album, setAlbum] = useState();
 	const [photos, setPhotos] = useState([]);
     const [loading, setLoading] = useState(true);
-    const { authUser } = useAuthContext();
 
 	useEffect(() => {
 		db.collection('albums').doc(albumId).get().then(doc => {
@@ -20,7 +19,6 @@ const useGetAlbum = (albumId) => {
 	useEffect(() => {
 		const unsubscribe = db.collection('images')
             .where('album', '==', db.collection('albums').doc(albumId))
-            .where('owner', '==', authUser.uid)
 			.orderBy("name")
 			.onSnapshot(snapshot => {
 				setLoading(true);

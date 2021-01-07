@@ -3,6 +3,7 @@ import './assets/scss/app.scss'
 import Album from './components/albums/Album'
 import Albums from './components/albums/Albums'
 import AuthContextProvider from './contexts/AuthContext'
+import EditAlbum from './components/albums/EditAlbum'
 import Frontpage from './components/Frontpage'
 import Login from './components/Authentication/Login'
 import Logout from './components/Authentication/Logout'
@@ -43,6 +44,10 @@ function App() {
 				<ProtectedRoute path="/albums">
 					<Route path="/">
 						<Albums />
+					</Route>
+
+					<Route path="/edit/:albumId">
+						<EditAlbum />
 					</Route>
 
 					<Route path="/:albumId">

@@ -1,19 +1,36 @@
-import React from 'react'
-import { Spinner, Col, Container, Card, Row } from 'react-bootstrap'
-import { useParams } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Button, Spinner, Col, Container, Card, Row } from 'react-bootstrap'
+import { useParams, useNavigate } from 'react-router-dom'
 import useGetAlbum from '../../hooks/useGetAlbum'
 import PhotoUpload from '../upload/PhotoUpload'
 
 const Album = () => {
+    const [uploadNewPhotos, setUploadNewPhotos] = useState(false);
     const { albumId } = useParams();
     const {album, photos, loading} = useGetAlbum(albumId);
+    const navigate = useNavigate();
 
     return (
         <Container fluid className="px-4">
             <h2 className="text-center">{album && album.title}</h2>
             <p className="text-center mb-2">{album && album.description}</p>
 
-            <PhotoUpload albumId={albumId} />
+            <div className="d-flex justify-content-between mb-3">
+                <Button variant="dark" onClick={() => {navigate(`/albums/edit/${albumId}`)}}>Edit album info</Button>
+                <Button variant="dark" onClick={() => {setUploadNewPhotos(!uploadNewPhotos)}}>
+                    {
+                        uploadNewPhotos 
+                        ? "Hide uploader" 
+                        : "Add photos"
+                    }
+                </Button>
+            </div>
+
+            {
+                uploadNewPhotos && (
+                    <PhotoUpload albumId={albumId} />
+                )
+            }
 
             <Row className="justify-content-md-center">
                 {loading
