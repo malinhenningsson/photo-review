@@ -7,9 +7,31 @@ import {SRLWrapper} from "simple-react-lightbox";
 
 const Album = () => {
     const [uploadNewPhotos, setUploadNewPhotos] = useState(false);
+    const [selectedPhotos, setSelectedPhotos] = useState([]);
     const { albumId } = useParams();
     const {album, photos, loading} = useGetAlbum(albumId);
     const navigate = useNavigate();
+
+    const updateSelectedPhotos = (e) => {
+        let photoArray = [];
+
+        // Include photo if checked and doesn't already exist in array
+        if (e.target.checked === true) {
+            if (selectedPhotos.includes(e.target.id)) {
+                return;
+            }
+            photoArray.push(e.target.id);
+            setSelectedPhotos(selectedPhotos.concat(photoArray));
+        }
+
+        // Remove photo from selected photos
+        if (e.target.checked === false) {
+            let filteredArray = selectedPhotos.filter(photo => {
+                return photo !== e.target.id
+            })
+            setSelectedPhotos(filteredArray)
+        }
+    }
 
     return (
         <Container fluid className="px-4">
@@ -47,6 +69,16 @@ const Album = () => {
                                         <a href={photo.url} >
                                             <Card.Img variant="top" src={photo.url} />
                                         </a>
+                                        <Card.Body>
+                                            <input 
+                                                type="checkbox" 
+                                                id={photo.id} 
+                                                name="selected-photo" 
+                                                className="mr-2" 
+                                                onChange={updateSelectedPhotos}
+                                                />
+                                            <label for="selected-photo">Select</label>
+                                        </Card.Body>
                                     </Card>
                                 </Col>
                             ))
@@ -54,6 +86,18 @@ const Album = () => {
                     }
                 </Row>
             </SRLWrapper>
+
+            {
+                selectedPhotos.length > 0 && (
+                    <div className="text-center mt-3">
+                        <p>Selected photos: {selectedPhotos.length}</p>
+                        <div className="d-flex justify-content-center">
+                            <Button variant="dark" className="mr-3">Create new album</Button>
+                            <Button variant="danger">Delete photos</Button>
+                        </div>
+                    </div>
+                )
+            }
         </Container>
     )
 }
