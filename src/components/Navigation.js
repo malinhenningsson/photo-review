@@ -18,7 +18,6 @@ const Navigation = () => {
                             authUser 
                             ? (
                                 <>
-                                    <NavLink to="/Profile" className="nav-link">Profile</NavLink>
                                     <NavLink to="/albums" className="nav-link">Albums</NavLink>
                                     <NavLink to="/upload" className="nav-link">Upload</NavLink>
                                     <NavLink to="/logout" className="nav-link">Log Out</NavLink>
