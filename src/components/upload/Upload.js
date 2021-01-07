@@ -29,7 +29,6 @@ const Upload = () => {
                 description,
                 owner: authUser.uid
             })
-
             navigate(`/albums/${docRef.id}`)
         } catch (err) {
             setError(err.message);

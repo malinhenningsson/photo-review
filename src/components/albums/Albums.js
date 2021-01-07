@@ -1,34 +1,23 @@
 import React, {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
-import { db } from '../../firebase'
 import { useAuthContext } from '../../contexts/AuthContext'
 import { Spinner, Container, Card, Row, Col } from 'react-bootstrap'
+import DefaultPhoto from '../../assets/images/default-image-album.png'
+import useGetAlbums from '../../hooks/useGetAlbums';
 
 const Albums = () => {
-    const [albums, setAlbums] = useState()
-    const [loading, setLoading] = useState(true);
-    
+    const { albums, loading } = useGetAlbums();
     const { authUser } = useAuthContext();
-
-    useEffect(() => {
-        const unsubscribe = db.collection('albums').orderBy('title').onSnapshot(snapshot => {
-            setLoading(true);
-            const snapshotAlbums = [];
-            snapshot.forEach(doc => {
-                snapshotAlbums.push({
-                    id: doc.id,
-                    ...doc.data()
-                })
-            })
-            setAlbums(snapshotAlbums);
-            setLoading(false);
-        })
-        return unsubscribe;
-    }, []);
 
     return (
         <Container fluid className="px-4">
 			<h2 className="text-center">Albums</h2>
+
+            { authUser && (
+				<div className="text-center mb-4">
+					<Link to="/upload" className="btn btn-dark mt-4">Create a new album</Link>
+				</div>
+			)}
 
             <Row className="justify-content-md-center">
                 {
@@ -39,10 +28,10 @@ const Albums = () => {
                             </Spinner>
                         ) : (
                             albums.map((album) => (
-                                <Col xs={12} sm={6} md={4} lg={3}>
-                                    <Link to={`/albums/${album.id}`} key={album.id}>
+                                <Col key={album.id} xs={12} sm={6} md={4} lg={3}>
+                                    <Link to={`/albums/${album.id}`}>
                                         <Card>
-                                        <Card.Img variant="top" src="holder.js/100px180" />
+                                        <Card.Img variant="top" src={DefaultPhoto} />
                                         <Card.Body>
                                             <Card.Title>{album.title}</Card.Title>
                                         </Card.Body>
@@ -53,13 +42,6 @@ const Albums = () => {
                         )
                 }
             </Row>
-
-
-			{ authUser && (
-				<div>
-					<Link to="/upload" className="btn btn-dark mt-4">Create a new album</Link>
-				</div>
-			)}
 		</Container>
     )
 }
