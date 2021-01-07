@@ -3,6 +3,7 @@ import { Button, Spinner, Col, Container, Card, Row } from 'react-bootstrap'
 import { useParams, useNavigate } from 'react-router-dom'
 import useGetAlbum from '../../hooks/useGetAlbum'
 import PhotoUpload from '../upload/PhotoUpload'
+import {SRLWrapper} from "simple-react-lightbox";
 
 const Album = () => {
     const [uploadNewPhotos, setUploadNewPhotos] = useState(false);
@@ -31,27 +32,28 @@ const Album = () => {
                     <PhotoUpload albumId={albumId} />
                 )
             }
-
-            <Row className="justify-content-md-center">
-                {loading
-                    ? (
-                        <Spinner animation="border" role="status">
-                            <span className="sr-only">Loading...</span>
-                        </Spinner>
-                    )
-                    : (
-                        photos.map(photo => (
-                            <Col xs={12} sm={6} md={4} lg={3} key={photo.id}>
-                                <Card>
-                                    <a href={photo.url} >
-                                        <Card.Img variant="top" src={photo.url} />
-                                    </a>
-                                </Card>
-                            </Col>
-                        ))
-                    )  
-                }
-            </Row>
+            <SRLWrapper>
+                <Row className="justify-content-md-center">
+                    {loading
+                        ? (
+                            <Spinner animation="border" role="status">
+                                <span className="sr-only">Loading...</span>
+                            </Spinner>
+                        )
+                        : (
+                            photos.map(photo => (
+                                <Col xs={12} sm={6} md={4} lg={3} key={photo.id}>
+                                    <Card>
+                                        <a href={photo.url} >
+                                            <Card.Img variant="top" src={photo.url} />
+                                        </a>
+                                    </Card>
+                                </Col>
+                            ))
+                        )  
+                    }
+                </Row>
+            </SRLWrapper>
         </Container>
     )
 }

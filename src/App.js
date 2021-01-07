@@ -9,59 +9,57 @@ import Login from './components/Authentication/Login'
 import Logout from './components/Authentication/Logout'
 import Navigation from './components/Navigation'
 import NotFound from './components/NotFound'
-import Profile from './components/Profile'
 import ProtectedRoute from './components/Authentication/ProtectedRoute'
 import Register from './components/Authentication/Register'
+import SimpleReactLightbox from "simple-react-lightbox";
 import Upload from './components/upload/Upload'
 
 function App() {
   return (
 	<Router>
 		<AuthContextProvider>
-		<Navigation />
+			<SimpleReactLightbox>
+				<Navigation />
 
-			<Routes>
-				<Route path="/">
-					<Frontpage />
-				</Route>
-				
-				<Route path="/register">
-					<Register />
-				</Route>
+					<Routes>
+						<Route path="/">
+							<Frontpage />
+						</Route>
+						
+						<Route path="/register">
+							<Register />
+						</Route>
 
-				<Route path="/login">
-					<Login />
-				</Route>
+						<Route path="/login">
+							<Login />
+						</Route>
 
-				<ProtectedRoute path="/logout">
-					<Logout />
-				</ProtectedRoute>
+						<ProtectedRoute path="/logout">
+							<Logout />
+						</ProtectedRoute>
 
-				<ProtectedRoute path="/profile">
-					<Profile />
-				</ProtectedRoute>
+						<ProtectedRoute path="/albums">
+							<Route path="/">
+								<Albums />
+							</Route>
 
-				<ProtectedRoute path="/albums">
-					<Route path="/">
-						<Albums />
-					</Route>
+							<Route path="/edit/:albumId">
+								<EditAlbum />
+							</Route>
 
-					<Route path="/edit/:albumId">
-						<EditAlbum />
-					</Route>
+							<Route path="/:albumId">
+								<Album />
+							</Route>
+						</ProtectedRoute>
 
-					<Route path="/:albumId">
-						<Album />
-					</Route>
-				</ProtectedRoute>
+						<ProtectedRoute path="/upload">
+							<Upload />
+						</ProtectedRoute>
 
-				<ProtectedRoute path="/upload">
-					<Upload />
-				</ProtectedRoute>
+						<Route path="*" element={<NotFound />} />
 
-				<Route path="*" element={<NotFound />} />
-
-			</Routes>
+					</Routes>
+			</SimpleReactLightbox>
 		</AuthContextProvider>
 	</Router>
 
