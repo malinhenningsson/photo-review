@@ -7,6 +7,7 @@ import {SRLWrapper} from "simple-react-lightbox"
 import { db } from '../../firebase'
 import firebase from 'firebase/app'
 import { useAuthContext } from '../../contexts/AuthContext'
+import useDeletePhoto from '../../hooks/useDeletePhoto'
 
 const Album = () => {
     const [uploadNewPhotos, setUploadNewPhotos] = useState(false);
@@ -14,6 +15,7 @@ const Album = () => {
     const [loadingNewAlbum, setLoadingNewAlbum] = useState(false);
     const [error, setError] = useState(false);
     const [reviewLink, setReviewLink] = useState(null);
+    const [deletePhoto, setDeletePhoto] = useState(null);
     
     // Route helpers
     const { albumId } = useParams();
@@ -21,6 +23,7 @@ const Album = () => {
 
     // Hooks to get album and photos
     const {album, photos, loading} = useGetAlbum(albumId);
+    useDeletePhoto(deletePhoto, albumId); 
 
     // Get authenticated user
     const { authUser } = useAuthContext();
@@ -82,6 +85,13 @@ const Album = () => {
         setReviewLink(url);
     }
 
+    const handleDeletePhoto = (photo) => {
+            // eslint-disable-next-line no-restricted-globals
+            if (confirm(`Are you sure you want to delete the photo\n"${photo.name}"?`)) {
+            setDeletePhoto(photo);
+        }
+    }
+
     return (
         <Container fluid className="px-4">
             <h2 className="text-center">{album && album.title}</h2>
@@ -128,15 +138,25 @@ const Album = () => {
                                         <a href={photo.url} >
                                             <Card.Img variant="top" src={photo.url} />
                                         </a>
-                                        <Card.Body>
-                                            <input 
-                                                type="checkbox" 
-                                                id={photo.id} 
-                                                name="selected-photo" 
-                                                className="mr-2" 
-                                                onChange={updateSelectedPhotos}
-                                                />
-                                            <label htmlFor="selected-photo">Select</label>
+                                        <Card.Body className="d-flex justify-content-between">
+                                            <div>
+                                                <input 
+                                                    type="checkbox" 
+                                                    id={photo.id} 
+                                                    name="selected-photo" 
+                                                    className="mr-2" 
+                                                    onChange={updateSelectedPhotos}
+                                                    />
+                                                <label htmlFor="selected-photo">Select</label>
+                                            </div>
+                                            <div>
+                                                <Button 
+                                                    variant="danger" 
+                                                    className="btn-sm" 
+                                                    onClick={() => handleDeletePhoto(photo, albumId)}>
+                                                        X
+                                                </Button>
+                                            </div>
                                         </Card.Body>
                                     </Card>
                                 </Col>
@@ -152,7 +172,7 @@ const Album = () => {
                         <p>Selected photos: {selectedPhotos.length}</p>
                         <div className="d-flex justify-content-center">
                             <Button variant="dark" className="mr-3" onClick={handleCreateNewAlbum}>Create new album</Button>
-                            <Button variant="danger">Delete photos</Button>
+                            {/* <Button variant="danger">Delete photos</Button> */}
                         </div>
                         {
                             error && (
