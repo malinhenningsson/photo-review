@@ -86,9 +86,16 @@ const Album = () => {
     }
 
     const handleDeletePhoto = (photo) => {
-            // eslint-disable-next-line no-restricted-globals
-            if (confirm(`Are you sure you want to delete the photo\n"${photo.name}"?`)) {
-            setDeletePhoto(photo);
+        if (photo.length > 1) {
+                // eslint-disable-next-line no-restricted-globals
+                if (confirm(`Are you sure you want to delete all of these \n"${photo.length}" photos?`)) {
+                    setDeletePhoto(photo);
+                    setSelectedPhotos([]);
+            }} else {
+                // eslint-disable-next-line no-restricted-globals
+                if (confirm(`Are you sure you want to delete photo \n"${photo.name}"?`)) {
+                    setDeletePhoto(photo);
+            }
         }
     }
 
@@ -172,7 +179,7 @@ const Album = () => {
                         <p>Selected photos: {selectedPhotos.length}</p>
                         <div className="d-flex justify-content-center">
                             <Button variant="dark" className="mr-3" onClick={handleCreateNewAlbum}>Create new album</Button>
-                            {/* <Button variant="danger">Delete photos</Button> */}
+                            <Button variant="danger" onClick={() => handleDeletePhoto(selectedPhotos)}>Delete photos</Button>
                         </div>
                         {
                             error && (
