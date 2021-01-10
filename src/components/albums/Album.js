@@ -5,16 +5,24 @@ import useGetAlbum from '../../hooks/useGetAlbum'
 import PhotoUpload from '../upload/PhotoUpload'
 import {SRLWrapper} from "simple-react-lightbox"
 import { db } from '../../firebase'
+import firebase from 'firebase/app'
 import { useAuthContext } from '../../contexts/AuthContext'
 
 const Album = () => {
     const [uploadNewPhotos, setUploadNewPhotos] = useState(false);
     const [selectedPhotos, setSelectedPhotos] = useState([]);
-    const { albumId } = useParams();
-    const {album, photos, loading} = useGetAlbum(albumId);
-    const navigate = useNavigate();
     const [loadingNewAlbum, setLoadingNewAlbum] = useState(false);
     const [error, setError] = useState(false);
+    const [reviewLink, setReviewLink] = useState(null);
+    
+    // Route helpers
+    const { albumId } = useParams();
+    const navigate = useNavigate();
+
+    // Hooks to get album and photos
+    const {album, photos, loading} = useGetAlbum(albumId);
+
+    // Get authenticated user
     const { authUser } = useAuthContext();
 
     const updateSelectedPhotos = (e) => {
@@ -57,7 +65,7 @@ const Album = () => {
 
             await selectedPhotos.forEach(photo => {
                 db.collection('images').doc(photo).update({
-                    album: db.collection('albums').doc(docRef.id)
+                    album: firebase.firestore.FieldValue.arrayUnion(db.collection('albums').doc(docRef.id))
                 })
             })
 
@@ -69,13 +77,22 @@ const Album = () => {
 
     }
 
+    const handleCreateReviewLink = (album) => {
+        let url = `http://localhost:3000/review/${album}`;
+        setReviewLink(url);
+    }
+
     return (
         <Container fluid className="px-4">
             <h2 className="text-center">{album && album.title}</h2>
             <p className="text-center mb-2">{album && album.description}</p>
 
             <div className="d-flex justify-content-between mb-3">
-                <Button variant="dark" onClick={() => {navigate(`/albums/edit/${albumId}`)}}>Edit album info</Button>
+                <div>
+                    <Button variant="dark" onClick={() => {navigate(`/albums/edit/${albumId}`)}}>Edit album info</Button>
+                    <Button variant="dark" onClick={() => {handleCreateReviewLink(albumId)}}>Create link for client review</Button>
+                </div>
+
                 <Button variant="dark" onClick={() => {setUploadNewPhotos(!uploadNewPhotos)}}>
                     {
                         uploadNewPhotos 
@@ -84,6 +101,12 @@ const Album = () => {
                     }
                 </Button>
             </div>
+
+            {
+                reviewLink && (
+                    <p>Review link: <a href={reviewLink}>{reviewLink}</a></p>
+                )
+            }
 
             {
                 uploadNewPhotos && (

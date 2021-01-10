@@ -34,7 +34,7 @@ const useUploadPhoto = (photo, albumId) => {
 				url: url
             }
             if (albumId) {
-				newPhoto.album = db.collection('albums').doc(albumId)
+				newPhoto.album = [db.collection('albums').doc(albumId)]
             }
             
             await db.collection('images').add(newPhoto);
