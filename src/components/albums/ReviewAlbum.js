@@ -1,59 +1,75 @@
 import React, { useEffect, useState } from 'react'
-import { Alert, Button, Spinner, Col, Container, Card, Row } from 'react-bootstrap'
-import { useParams } from 'react-router-dom'
-import useGetAlbum from '../../hooks/useGetAlbum'
-import {SRLWrapper} from "simple-react-lightbox"
+import { useNavigate, useParams } from 'react-router-dom'
+import firebase from 'firebase/app'
 import { db } from '../../firebase'
+import useGetAlbum from '../../hooks/useGetAlbum'
+import { Alert, Button, Spinner, Col, Container, Card, Row } from 'react-bootstrap'
+import {SRLWrapper} from "simple-react-lightbox"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons'
-import firebase from 'firebase/app'
 
 const ReviewAlbum = () => {
     const [likedPhotos, setLikedPhotos] = useState([]);
+    const [reviewedPhotos, setReviewedPhotos] = useState([]);
+    const [disabledBtn, setDisabledBtn] = useState(true);
     const { albumId } = useParams();
+    const navigate = useNavigate();
     const {album, photos, loading} = useGetAlbum(albumId);
     const [error, setError] = useState(false);
 
-
-    // useEffect(() => {
-    //     async function getPhotos() {
-    //         const photoList = await Promise.all(
-    //             photos.map(photo => {
-    //                 return photo.id
-    //             })
-    //         )
-    //         setLikedPhotos(photoList);
-    //     }
-    //     getPhotos();
-    // }, [photos]);
-
-    const addLikedPhoto = (photo) => {
-        let likedArray = [];
-        if (likedPhotos.includes(photo)) {
-            return;
+    useEffect(() => {
+        // Get photos and add to a review array
+        async function getPhotos() {
+            const photoList = await Promise.all(
+                photos.map(photo => {
+                    return {
+                        id: photo.id, 
+                        like: undefined
+                    }
+                })
+            )
+            setReviewedPhotos(photoList);
         }
-        likedArray.push(photo);
-        setLikedPhotos(likedPhotos.concat(likedArray));
+        getPhotos();
+    }, [photos]);
+
+    useEffect(() => {
+        // Update array with liked photos
+        let likedArray = reviewedPhotos.filter(photo => {
+            return photo.like === true
+        });
+        setLikedPhotos(likedArray);
+
+        // Check if all photos have been reviewed, if true set disabled button to false
+        let result = reviewedPhotos.every(photo => photo.like !== undefined);
+        if (result === false) {
+            setDisabledBtn(true);
+            return;
+        } else if (result === true) {
+            setDisabledBtn(false);
+        }
+    }, [reviewedPhotos])
+
+    const updatePhotoReaction = (photo, reaction) => {
+        // Map over reviewed photos and update like reaction
+        let updatedArray = reviewedPhotos.map(item => {
+            if (item.id === photo.id) {
+                return {
+                    id: item.id,
+                    like: reaction
+                }
+            } else {
+                return item;
+            }
+        })
+        setReviewedPhotos(updatedArray);
     }
 
-    const removeLikedPhoto = (photo) => {
-        console.log('removing photo: ', photo)
-        if (!likedPhotos.includes(photo)) {
-            return;
-        }
-        let filteredArray = likedPhotos.filter(item => {
-            return item !== photo
-        })
-        setLikedPhotos(filteredArray);
-    } 
-
-
     const handleSendReview = async () => {
-        console.log('sent review', likedPhotos);
+        console.log('sent review', reviewedPhotos);
         const title = `${album.title}-${Date.now()}`;
 
-        // setError(false);
-        // setLoading(true);
+        setError(false);
 
         try {
             const docRef = await db.collection('albums').add({
@@ -67,11 +83,9 @@ const ReviewAlbum = () => {
                 })
             })
 
-            // navigate(`/albums`);
+            navigate(`/review/thanks`);
         } catch (err) {
             setError(err.message);
-            console.error(err);
-            // setLoading(false);
         }
     }
 
@@ -98,7 +112,8 @@ const ReviewAlbum = () => {
                                         <Card.Body className="d-flex justify-content-between">
                                             <button 
                                                 style={{ border: "none", backgroundColor: "transparent" }} 
-                                                onClick={() => addLikedPhoto(photo)}>
+                                                onClick={() => updatePhotoReaction(photo, true)}
+                                                >
                                                     <FontAwesomeIcon 
                                                         icon={faThumbsUp}
                                                         style={{ color: "green", fontSize: "1.5em", margin: "0 0.5em" }} 
@@ -107,7 +122,8 @@ const ReviewAlbum = () => {
 
                                             <button 
                                                 style={{ border: "none", backgroundColor: "transparent" }} 
-                                                onClick={() => removeLikedPhoto(photo)}>
+                                                onClick={() => updatePhotoReaction(photo, false)}
+                                                >
                                                     <FontAwesomeIcon 
                                                         icon={faThumbsDown} 
                                                         style={{ color: "red", fontSize: "1.5em", margin: "0 0.5em"}} 
@@ -123,11 +139,17 @@ const ReviewAlbum = () => {
             </SRLWrapper>
 
             {
-                likedPhotos && likedPhotos.length > 0 && (
+                reviewedPhotos && likedPhotos.length > 0 && (
                     <div className="text-center mt-3">
                         <p>Liked photos: {likedPhotos.length} / {photos.length}</p>
                         <div className="d-flex justify-content-center">
-                            <Button variant="dark" className="mr-3" onClick={handleSendReview}>Send Review</Button>
+                            <Button 
+                                disabled={disabledBtn} 
+                                variant="dark" 
+                                className="mr-3" 
+                                onClick={handleSendReview}>
+                                    Send Review
+                            </Button>
                         </div>
                         {
                             error && (

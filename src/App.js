@@ -14,6 +14,7 @@ import Register from './components/Authentication/Register'
 import SimpleReactLightbox from "simple-react-lightbox";
 import Upload from './components/upload/Upload'
 import ReviewAlbum from './components/albums/ReviewAlbum'
+import ReviewThanks from './components/albums/ReviewThanks'
 
 function App() {
   return (
@@ -55,6 +56,10 @@ function App() {
 
 						<Route path="/review/:albumId">
 							<ReviewAlbum />
+						</Route>
+
+						<Route path="/review/thanks">
+							<ReviewThanks />
 						</Route>
 
 						<ProtectedRoute path="/upload">

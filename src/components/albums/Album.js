@@ -81,7 +81,8 @@ const Album = () => {
     }
 
     const handleCreateReviewLink = (album) => {
-        let url = `http://localhost:3000/review/${album}`;
+        let urlOrigin = window.location.origin
+        let url = `${urlOrigin}/review/${album}`;
         setReviewLink(url);
     }
 
