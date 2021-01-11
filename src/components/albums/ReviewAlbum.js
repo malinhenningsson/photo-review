@@ -63,6 +63,7 @@ const ReviewAlbum = () => {
             }
         })
         setReviewedPhotos(updatedArray);
+        toggleThumbs(photo.id, reaction);
     }
 
     const handleSendReview = async () => {
@@ -89,6 +90,17 @@ const ReviewAlbum = () => {
         }
     }
 
+    const toggleThumbs = (id, reaction) => {
+        let card = document.getElementById(id);
+        if (reaction === true) {
+            card.getElementsByClassName('thumbs-up')[0].classList.add('thumb-active');
+            card.getElementsByClassName('thumbs-down')[0].classList.remove('thumb-active');
+        } else if (reaction === false) {
+            card.getElementsByClassName('thumbs-down')[0].classList.add('thumb-active');
+            card.getElementsByClassName('thumbs-up')[0].classList.remove('thumb-active');
+        }
+    }
+
     return (
         <Container fluid className="px-4">
             <h2 className="text-center">Review for: {album && album.title}</h2>
@@ -109,24 +121,24 @@ const ReviewAlbum = () => {
                                         <a href={photo.url} >
                                             <Card.Img variant="top" src={photo.url} />
                                         </a>
-                                        <Card.Body className="d-flex justify-content-between">
+                                        <Card.Body className="d-flex justify-content-between" id={photo.id}>
                                             <button 
                                                 style={{ border: "none", backgroundColor: "transparent" }} 
-                                                onClick={() => updatePhotoReaction(photo, true)}
-                                                >
+                                                className="thumbs-up"
+                                                onClick={() => updatePhotoReaction(photo, true)} >
                                                     <FontAwesomeIcon 
                                                         icon={faThumbsUp}
-                                                        style={{ color: "green", fontSize: "1.5em", margin: "0 0.5em" }} 
+                                                        style={{ fontSize: "1.5em", margin: "0 0.5em" }} 
                                                         />
                                             </button>
 
                                             <button 
                                                 style={{ border: "none", backgroundColor: "transparent" }} 
-                                                onClick={() => updatePhotoReaction(photo, false)}
-                                                >
+                                                className="thumbs-down"
+                                                onClick={() => updatePhotoReaction(photo, false)} >
                                                     <FontAwesomeIcon 
                                                         icon={faThumbsDown} 
-                                                        style={{ color: "red", fontSize: "1.5em", margin: "0 0.5em"}} 
+                                                        style={{ fontSize: "1.5em", margin: "0 0.5em"}} 
                                                         />
                                             </button>
                                         </Card.Body>

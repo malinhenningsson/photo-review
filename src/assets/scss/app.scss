@@ -45,3 +45,12 @@ body {
     margin: 1em 0;
     text-align: center;
 }
+
+// Review album
+.thumbs-up,
+.thumbs-down {
+    color: gray;
+}
+.thumb-active {
+    color: rgb(71, 71, 241);
+}
