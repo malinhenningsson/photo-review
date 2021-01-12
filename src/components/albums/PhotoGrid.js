@@ -1,7 +1,7 @@
 import React from 'react'
-import { Button, Col, Card } from 'react-bootstrap'
+import { Col, Card } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons'
+import { faThumbsDown, faThumbsUp, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { useAuthContext } from '../../contexts/AuthContext'
 
 const PhotoGrid = ({ photo, albumId, handleDeletePhoto, updateSelectedPhotos, updatePhotoReaction }) => {
@@ -28,12 +28,13 @@ const PhotoGrid = ({ photo, albumId, handleDeletePhoto, updateSelectedPhotos, up
                                     <label htmlFor="selected-photo">Select</label>
                                 </div>
                                 <div>
-                                    <Button 
-                                        variant="danger" 
-                                        className="btn-sm" 
+                                    <button 
+                                        style={{ border: "none", backgroundColor: "transparent" }} 
                                         onClick={() => handleDeletePhoto(photo, albumId)}>
-                                            X
-                                    </Button>
+                                            <FontAwesomeIcon 
+                                                icon={faTrashAlt}
+                                            />
+                                    </button>
                                 </div>
                             </>
                         ) : (

@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuthContext } from '../../contexts/AuthContext'
 import { Spinner, Container, Card, Row, Col, Button } from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import DefaultFolder from '../../assets/images/default-folder.png'
 import useGetAlbums from '../../hooks/useGetAlbums';
 import useDeleteAlbum from '../../hooks/useDeleteAlbum'
@@ -44,17 +46,18 @@ const Albums = () => {
                                             <Card.Img variant="top" src={DefaultFolder} />
                                         </Link>
                                         <Card.Body className="d-flex justify-content-between">
-                                            <Link to={`/albums/${album.id}`}>
+                                            <Link to={`/albums/${album.id}`} style={{ color: "#333" }}>
                                                 <Card.Title>
                                                     {album.title}
                                                 </Card.Title>
                                             </Link>
-                                            <Button 
-                                                variant="danger" 
-                                                className="btn-sm" 
+                                            <button 
+                                                style={{ border: "none", backgroundColor: "transparent" }} 
                                                 onClick={() => handleDeleteAlbum(album)}>
-                                                    X
-                                            </Button>
+                                                    <FontAwesomeIcon 
+                                                        icon={faTrashAlt}
+                                                    />
+                                            </button>
                                         </Card.Body>
                                     </Card>
                                 </Col>
