@@ -3,10 +3,11 @@ import { useNavigate, useParams } from 'react-router-dom'
 import firebase from 'firebase/app'
 import { db } from '../../firebase'
 import useGetAlbum from '../../hooks/useGetAlbum'
-import { Alert, Button, Spinner, Col, Container, Card, Row } from 'react-bootstrap'
+import useGetPhotosInAlbum from '../../hooks/useGetPhotosInAlbum'
+import { Alert, Button, Container, Row } from 'react-bootstrap'
 import {SRLWrapper} from "simple-react-lightbox"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons'
+import PhotoGrid from './PhotoGrid'
+import LoadingSpinner from '../LoadingSpinner'
 
 const ReviewAlbum = () => {
     const [likedPhotos, setLikedPhotos] = useState([]);
@@ -14,7 +15,8 @@ const ReviewAlbum = () => {
     const [disabledBtn, setDisabledBtn] = useState(true);
     const { albumId } = useParams();
     const navigate = useNavigate();
-    const {album, photos, loading} = useGetAlbum(albumId);
+    const {album} = useGetAlbum(albumId);
+    const {photos, loading} = useGetPhotosInAlbum(albumId)
     const [error, setError] = useState(false);
 
     useEffect(() => {
@@ -110,40 +112,15 @@ const ReviewAlbum = () => {
                 <Row className="justify-content-md-center">
                     {loading
                         ? (
-                            <Spinner animation="border" role="status">
-                                <span className="sr-only">Loading...</span>
-                            </Spinner>
+                            <LoadingSpinner />
                         )
                         : (
                             photos.map(photo => (
-                                <Col xs={12} sm={6} md={4} lg={3} key={photo.id}>
-                                    <Card>
-                                        <a href={photo.url} >
-                                            <Card.Img variant="top" src={photo.url} />
-                                        </a>
-                                        <Card.Body className="d-flex justify-content-between" id={photo.id}>
-                                            <button 
-                                                style={{ border: "none", backgroundColor: "transparent" }} 
-                                                className="thumbs-up"
-                                                onClick={() => updatePhotoReaction(photo, true)} >
-                                                    <FontAwesomeIcon 
-                                                        icon={faThumbsUp}
-                                                        style={{ fontSize: "1.5em", margin: "0 0.5em" }} 
-                                                        />
-                                            </button>
-
-                                            <button 
-                                                style={{ border: "none", backgroundColor: "transparent" }} 
-                                                className="thumbs-down"
-                                                onClick={() => updatePhotoReaction(photo, false)} >
-                                                    <FontAwesomeIcon 
-                                                        icon={faThumbsDown} 
-                                                        style={{ fontSize: "1.5em", margin: "0 0.5em"}} 
-                                                        />
-                                            </button>
-                                        </Card.Body>
-                                    </Card>
-                                </Col>
+                                <PhotoGrid 
+                                    photo={photo} 
+                                    albumId={albumId} 
+                                    updatePhotoReaction={updatePhotoReaction} 
+                                    />
                             ))
                         )  
                     }
