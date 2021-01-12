@@ -13,45 +13,21 @@ import LoadingSpinner from '../LoadingSpinner'
 import PhotoGrid from './PhotoGrid'
 
 const Album = () => {
-    const [uploadNewPhotos, setUploadNewPhotos] = useState(false);
-    const [selectedPhotos, setSelectedPhotos] = useState([]);
     const [btnDisabled, setBtnDisabled] = useState(false);
+    const [deletePhoto, setDeletePhoto] = useState(null);
     const [error, setError] = useState(false);
     const [reviewLink, setReviewLink] = useState(null);
-    const [deletePhoto, setDeletePhoto] = useState(null);
+    const [selectedPhotos, setSelectedPhotos] = useState([]);
+    const [uploadNewPhotos, setUploadNewPhotos] = useState(false);
     
-    // Route helpers
     const { albumId } = useParams();
     const navigate = useNavigate();
 
-    // Hooks to get album and photos and delete photo
     const {album} = useGetAlbum(albumId);
     const {photos, loading} = useGetPhotosInAlbum(albumId);
-    useDeletePhoto(deletePhoto, albumId); 
-
-    // Get authenticated user
     const { authUser } = useAuthContext();
-
-    const updateSelectedPhotos = (e) => {
-        let photoArray = [];
-
-        // Include photo if checked and doesn't already exist in array
-        if (e.target.checked === true) {
-            if (selectedPhotos.includes(e.target.id)) {
-                return;
-            }
-            photoArray.push(e.target.id);
-            setSelectedPhotos(selectedPhotos.concat(photoArray));
-        }
-
-        // Remove photo from selected photos
-        if (e.target.checked === false) {
-            let filteredArray = selectedPhotos.filter(photo => {
-                return photo !== e.target.id
-            })
-            setSelectedPhotos(filteredArray)
-        }
-    }
+    
+    useDeletePhoto(deletePhoto, albumId);
 
     const handleCreateNewAlbum = async () => {
         const title = prompt('New album title:');
@@ -74,27 +50,26 @@ const Album = () => {
                 db.collection('images').doc(photo).update({
                     album: firebase.firestore.FieldValue.arrayUnion(db.collection('albums').doc(docRef.id))
                 })
-            })
+            });
             navigate(`/albums`);
         } catch (err) {
             setError(err.message);
             setBtnDisabled(false);
-        }
-
-    }
+        };
+    };
 
     const handleCreateReviewLink = (album) => {
-        let urlOrigin = window.location.origin
+        let urlOrigin = window.location.origin;
         let url = `${urlOrigin}/review/${album}`;
         setReviewLink(url);
-    }
+    };
 
     const handleDeletePhoto = (photo) => {
         setBtnDisabled(true);
 
         if (photo.length > 1) {
                 // eslint-disable-next-line no-restricted-globals
-                if (confirm(`Are you sure you want to delete all of these \n"${photo.length}" photos?`)) {
+                if (confirm(`Are you sure you want to delete these ${photo.length} photos?`)) {
                     setDeletePhoto(photo);
                     setSelectedPhotos([]);
                     setBtnDisabled(false);
@@ -103,9 +78,30 @@ const Album = () => {
                 if (confirm(`Are you sure you want to delete photo \n"${photo.name}"?`)) {
                     setDeletePhoto(photo);
                     setBtnDisabled(false);
-            }
-        }
-    }
+            };
+        };
+    };
+
+    const updateSelectedPhotos = (e) => {
+        let photoArray = [];
+
+        // Include photo if checked and doesn't already exist in array
+        if (e.target.checked === true) {
+            if (selectedPhotos.includes(e.target.id)) {
+                return;
+            };
+            photoArray.push(e.target.id);
+            setSelectedPhotos(selectedPhotos.concat(photoArray));
+        };
+
+        // Remove photo from selected photos
+        if (e.target.checked === false) {
+            let filteredArray = selectedPhotos.filter(photo => {
+                return photo !== e.target.id
+            });
+            setSelectedPhotos(filteredArray)
+        };
+    };
 
     return (
         <Container fluid className="px-4">
@@ -114,8 +110,16 @@ const Album = () => {
 
             <div className="d-flex justify-content-between mb-3">
                 <div>
-                    <Button variant="dark" onClick={() => {navigate(`/albums/edit/${albumId}`)}}>Edit album info</Button>
-                    <Button variant="dark" onClick={() => {handleCreateReviewLink(albumId)}}>Create link for client review</Button>
+                    <Button 
+                        variant="dark" 
+                        onClick={() => {navigate(`/albums/edit/${albumId}`)}}>
+                            Edit album info
+                    </Button>
+                    <Button 
+                    variant="dark" 
+                    onClick={() => {handleCreateReviewLink(albumId)}}>
+                        Create client review
+                    </Button>
                 </div>
 
                 <Button variant="dark" onClick={() => {setUploadNewPhotos(!uploadNewPhotos)}}>
@@ -138,23 +142,31 @@ const Album = () => {
                     <PhotoUpload albumId={albumId} />
                 )
             }
+
+            {
+                error && (
+                    <Alert variant="danger">{error}</Alert>
+                )
+            }
+
             <SRLWrapper>
                 <Row className="justify-content-md-center">
-                    {loading
-                        ? (
-                            <LoadingSpinner />
-                        )
-                        : (
-                            photos.map(photo => (
-                                <PhotoGrid 
-                                    photo={photo} 
-                                    albumId={albumId} 
-                                    updateSelectedPhotos={updateSelectedPhotos} 
-                                    handleDeletePhoto={handleDeletePhoto}
-                                    key={photo.id} 
-                                    />
-                            ))
-                        )  
+                    {
+                        loading
+                            ? (
+                                <LoadingSpinner />
+                            )
+                            : (
+                                photos.map(photo => (
+                                    <PhotoGrid 
+                                        photo={photo} 
+                                        albumId={albumId} 
+                                        updateSelectedPhotos={updateSelectedPhotos} 
+                                        handleDeletePhoto={handleDeletePhoto}
+                                        key={photo.id} 
+                                        />
+                                ))
+                            )  
                     }
                 </Row>
             </SRLWrapper>
@@ -164,14 +176,20 @@ const Album = () => {
                     <div className="text-center mt-3">
                         <p>Selected photos: {selectedPhotos.length}</p>
                         <div className="d-flex justify-content-center">
-                            <Button disabled={btnDisabled} variant="dark" className="mr-3" onClick={handleCreateNewAlbum}>Create new album</Button>
-                            <Button disabled={btnDisabled} variant="danger" onClick={() => handleDeletePhoto(selectedPhotos)}>Delete photos</Button>
+                            <Button 
+                                disabled={btnDisabled} 
+                                variant="dark" 
+                                className="mr-3" 
+                                onClick={handleCreateNewAlbum}>
+                                    Create new album
+                            </Button>
+                            <Button 
+                                disabled={btnDisabled} 
+                                variant="danger" 
+                                onClick={() => handleDeletePhoto(selectedPhotos)}>
+                                    Delete photos
+                            </Button>
                         </div>
-                        {
-                            error && (
-                                <Alert variant="danger">{error}</Alert>
-                            )
-                        }
                     </div>
                 )
             }
