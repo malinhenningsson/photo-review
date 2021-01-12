@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Alert, Button, Spinner, Col, Container, Card, Row } from 'react-bootstrap'
 import { useParams, useNavigate } from 'react-router-dom'
 import useGetAlbum from '../../hooks/useGetAlbum'
+import useGetPhotosInAlbum from '../../hooks/useGetPhotosInAlbum'
 import PhotoUpload from '../upload/PhotoUpload'
 import {SRLWrapper} from "simple-react-lightbox"
 import { db } from '../../firebase'
@@ -22,7 +23,8 @@ const Album = () => {
     const navigate = useNavigate();
 
     // Hooks to get album and photos
-    const {album, photos, loading} = useGetAlbum(albumId);
+    const {album} = useGetAlbum(albumId);
+    const {photos, loading} = useGetPhotosInAlbum(albumId);
     useDeletePhoto(deletePhoto, albumId); 
 
     // Get authenticated user
