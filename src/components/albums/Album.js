@@ -150,7 +150,8 @@ const Album = () => {
                                     photo={photo} 
                                     albumId={albumId} 
                                     updateSelectedPhotos={updateSelectedPhotos} 
-                                    handleDeletePhoto={handleDeletePhoto} 
+                                    handleDeletePhoto={handleDeletePhoto}
+                                    key={photo.id} 
                                     />
                             ))
                         )  

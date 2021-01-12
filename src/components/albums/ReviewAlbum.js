@@ -120,6 +120,7 @@ const ReviewAlbum = () => {
                                     photo={photo} 
                                     albumId={albumId} 
                                     updatePhotoReaction={updatePhotoReaction} 
+                                    key={photo.id} 
                                     />
                             ))
                         )  
