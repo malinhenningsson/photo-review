@@ -1,13 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuthContext } from '../../contexts/AuthContext'
-import { Spinner, Container, Card, Row, Col } from 'react-bootstrap'
-import DefaultPhoto from '../../assets/images/default-image-album.png'
+import { Spinner, Container, Card, Row, Col, Button } from 'react-bootstrap'
+import DefaultFolder from '../../assets/images/default-folder.png'
 import useGetAlbums from '../../hooks/useGetAlbums';
+import useDeleteAlbum from '../../hooks/useDeleteAlbum'
 
 const Albums = () => {
+    const [deleteAlbum, setDeleteAlbum] = useState(null);
     const { albums, loading } = useGetAlbums();
     const { authUser } = useAuthContext();
+    useDeleteAlbum(deleteAlbum);
+
+    const handleDeleteAlbum = (album) => {
+        // eslint-disable-next-line no-restricted-globals
+        if (confirm(`Are you sure you want to delete album \n"${album.title}"?`)) {
+            setDeleteAlbum(album);
+        }
+    }
 
     return (
         <Container fluid className="px-4">
@@ -29,14 +39,24 @@ const Albums = () => {
                         ) : (
                             albums.map((album) => (
                                 <Col key={album.id} xs={12} sm={6} md={4} lg={3}>
-                                    <Link to={`/albums/${album.id}`}>
-                                        <Card>
-                                        <Card.Img variant="top" src={DefaultPhoto} />
-                                        <Card.Body>
-                                            <Card.Title>{album.title}</Card.Title>
+                                    <Card>
+                                        <Link to={`/albums/${album.id}`}>
+                                            <Card.Img variant="top" src={DefaultFolder} />
+                                        </Link>
+                                        <Card.Body className="d-flex justify-content-between">
+                                            <Link to={`/albums/${album.id}`}>
+                                                <Card.Title>
+                                                    {album.title}
+                                                </Card.Title>
+                                            </Link>
+                                            <Button 
+                                                variant="danger" 
+                                                className="btn-sm" 
+                                                onClick={() => handleDeleteAlbum(album)}>
+                                                    X
+                                            </Button>
                                         </Card.Body>
-                                        </Card>
-                                    </Link>
+                                    </Card>
                                 </Col>
                             ))
                         )
