@@ -2,25 +2,31 @@ import { useEffect, useState } from 'react'
 import { db, storage } from '../firebase'
 import { useAuthContext } from '../contexts/AuthContext'
 
-const useUploadPhoto = (photo, albumId) => {
-    const [uploadedPhoto, setUploadedPhoto] = useState(null);
+const useUploadPhoto = (photo, albumId = null) => {
     const [error, setError] = useState(null);
-	const [isSuccess, setIsSuccess] = useState(false);
+	const [success, setSuccess] = useState(false);
+    const [uploadedPhoto, setUploadedPhoto] = useState(null);
+	const [uploadProgress, setUploadProgress] = useState(null);
     const { authUser } = useAuthContext();
     
     useEffect(() => {
         if (!photo) {
             setUploadedPhoto(null);
+            setUploadProgress(null);
             setError(null);
-            setIsSuccess(null);
+            setSuccess(null);
             return;
         };
 
         setError(false);
-        setIsSuccess(false);
+        setSuccess(false);
 
         const fileRef = storage.ref(`images/${authUser.uid}/${photo.name}`)
         const uploadTask = fileRef.put(photo);
+
+        uploadTask.on('state_changed', taskSnapshot => {
+			setUploadProgress(Math.round((taskSnapshot.bytesTransferred/taskSnapshot.totalBytes) * 100));
+        })
 
         uploadTask.then(async snapshot => {
             const url = await snapshot.ref.getDownloadURL();
@@ -39,20 +45,20 @@ const useUploadPhoto = (photo, albumId) => {
             
             await db.collection('images').add(newPhoto);
 
-            setIsSuccess(true);
+            setSuccess(true);
+            setUploadProgress(null);
 
             setUploadedPhoto(newPhoto);
-            setIsSuccess(true);
+            setSuccess(true);
         }).catch(err => {
-            console.log("File upload triggered an error", err);
 			setError({
 				type: "warning",
-				msg: `Image could not be uploaded due to an error (${err.code}).`
+				msg: `Photo could not be uploaded due to an error (${err.code}).`
 			})
         })
-    }, [photo, authUser])
+    }, [photo, authUser, albumId])
 
-    return { uploadedPhoto, error, isSuccess }
+    return { uploadedPhoto, uploadProgress, error, success }
 }
 
 export default useUploadPhoto

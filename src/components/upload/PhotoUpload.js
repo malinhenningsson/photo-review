@@ -1,11 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react'
+import { Alert } from 'react-bootstrap'
 import { useDropzone } from 'react-dropzone'
 import useUploadPhoto from '../../hooks/useUploadPhoto'
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 
 const PhotoUpload = ({ albumId }) => {
-    const [photo, setPhoto] = useState(null);
     const [message, setMessage] = useState(null);
-    const { uploadProgress, error, isSuccess } = useUploadPhoto(photo, albumId);
+    const [photo, setPhoto] = useState(null);
+    const { uploadProgress, error, success } = useUploadPhoto(photo, albumId);
 
     useEffect(() => {
         if (error) {
@@ -13,7 +16,7 @@ const PhotoUpload = ({ albumId }) => {
 				error: true,
 				text: error,
 			});
-		} else if (isSuccess) {
+		} else if (success) {
 			setMessage({
 				success: true,
 				text: 'Image successfully uploaded!',
@@ -22,7 +25,7 @@ const PhotoUpload = ({ albumId }) => {
 		} else {
 			setMessage(null);
 		}
-    }, [error, isSuccess])
+    }, [error, success])
 
     const onDrop = useCallback(acceptedFiles => {
         setMessage(null);
@@ -56,8 +59,23 @@ const PhotoUpload = ({ albumId }) => {
                 }
 
                 {
+                    uploadProgress !== null && (
+                        <div style={{ margin: "1em auto", width: "2em", height: "2em" }}>
+                            <CircularProgressbar 
+                                value={uploadProgress} 
+                                strokeWidth={50} 
+                                styles={buildStyles({
+                                    strokeLinecap: "butt",
+                                    pathColor: "lavender",
+                                    trailColor: "transparent"
+                                    })} />
+                        </div>
+                    )
+                }
+
+                {
                     message && (
-                        <p>{message.text}</p>
+                        <Alert className="mt-2" variant={message.error ? "danger" : "success"}>{message.text}</Alert>
                     )
                 }
             </div>

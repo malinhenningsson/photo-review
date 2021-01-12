@@ -5,10 +5,10 @@ import { useAuthContext } from '../../contexts/AuthContext'
 import { db } from '../../firebase'
 
 const Upload = () => {
-    const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [title, setTitle] = useState('');
 
     const { authUser } = useAuthContext();
     const navigate = useNavigate();
@@ -68,7 +68,10 @@ const Upload = () => {
 
                 <Button variant="dark" disabled={loading} type="submit">Create</Button>
             </Form>
-            {error && (<Alert variant="danger">{error}</Alert>)}
+            {
+                error && (
+                    <Alert variant="danger">{error}</Alert>)
+            }
         </Container>
     )
 }
