@@ -1,35 +1,39 @@
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import { db, storage } from "../firebase";
-import firebase from 'firebase/app';
-import useDeletePhoto from './useDeletePhoto';
+import firebase from 'firebase/app'
 
 const useDeleteAlbum = (album) => {
-    const [photos, setPhotos] = useState();
-    const [albumId, setAlbumId] = useState();
-    useDeletePhoto(photos, albumId)
-
     useEffect(async () => {
         if (!album) {
             return;
-        }
-        setAlbumId(album.id);
+        };
 
        (async () => {
-            // get images for album
-            // THIS PART GIVES ERRORS - FIX IT!!
+            // get all photos for album
             db.collection('images')
-                .where('album', 'array-contains', db.collection('albums').doc(album.id))
-                .onSnapshot(snapshot => {
-                    snapshot.forEach(doc => {
-                        setPhotos({
-                            id: doc.id,
-                            ...doc.data(),
-                        })
-                    });
-                });
+                .where('album', 'array-contains', db.collection('albums').doc(album.id)).get()
+                .then(res => {
+                    res.forEach(photo => {
+                        // remove album-reference in database
+                        photo.ref.update({
+                            album: firebase.firestore.FieldValue.arrayRemove(db.collection('albums').doc(album.id))
+                        });
 
-            // delete album from database
-            await db.collection('albums').doc(album.id).delete();
+                        photo.ref.get().then(res => {
+                            // check if photo has more album-references,
+                            // if false delete from database and storage
+                            if (res.data().album.length < 1) {
+                                storage.ref(res.data().path).delete();
+                                db.collection('images').doc(res.id).delete();
+                            }
+                        })
+                    })
+                }).then(res => {
+                    // delete album from database
+                    db.collection('albums').doc(album.id).delete();
+                }).catch(err => {
+                    console.error(err)
+                });
         })();
     }, [album]);
     return {}

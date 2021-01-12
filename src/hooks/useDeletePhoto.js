@@ -7,6 +7,9 @@ const useDeletePhoto = (photo, albumId) => {
         if (!photo) {
             return;
         }
+        if (!albumId) {
+            return;
+        }
 
        (async () => {
             if (photo.length > 1) {
@@ -42,7 +45,7 @@ const useDeletePhoto = (photo, albumId) => {
             }
         })();
         
-    }, [photo]);
+    }, [photo, albumId]);
     return {}
 }
 

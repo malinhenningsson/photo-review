@@ -9,7 +9,7 @@ const EditAlbum = () => {
     const titleRef = useRef();
     const descriptionRef = useRef();
     const [error, setError] = useState(false);
-    const [loadingEdit, setLoadingEdit] = useState(false);
+    const [btnDisabled, setBtnDisabled] = useState(false);
     const { albumId } = useParams();
     const { authUser } = useAuthContext();
     const {album, loading} = useGetAlbum(albumId);
@@ -29,7 +29,7 @@ const EditAlbum = () => {
         }
 
         try {
-            setLoadingEdit(true);
+            setBtnDisabled(true);
 
             if (album.title !== titleRef.current.value) {
                 await db.collection('albums').doc(albumId).update({
@@ -43,11 +43,11 @@ const EditAlbum = () => {
                 })
             };
 
-            setLoadingEdit(false);
+            setBtnDisabled(false);
             navigate(`/albums/${albumId}`);
         } catch (err) {
             setError("Something went wrong while updating album.");
-            setLoadingEdit(false);
+            setBtnDisabled(false);
         }
     }
 
@@ -89,7 +89,7 @@ const EditAlbum = () => {
                                 />
                         </Form.Group>
 
-                        <Button variant="dark" disabled={loadingEdit} type="submit">Save</Button>
+                        <Button variant="dark" disabled={btnDisabled} type="submit">Save</Button>
                     </Form>
 
                 )

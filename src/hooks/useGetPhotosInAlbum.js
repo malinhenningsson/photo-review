@@ -3,9 +3,13 @@ import { db } from '../firebase'
 
 const useGetPhotosInAlbum = (albumId) => {
     const [photos, setPhotos] = useState([]);
-    const [loading, setLoading] = useState(true);
-
+	const [loading, setLoading] = useState(true);
+	
     useEffect(() => {
+		if (!albumId) {
+			return;
+		};
+
 		const unsubscribe = db.collection('images')
 			.where('album', 'array-contains', db.collection('albums').doc(albumId))
 			.orderBy("name")
