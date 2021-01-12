@@ -10,14 +10,15 @@ import PhotoGrid from './PhotoGrid'
 import LoadingSpinner from '../LoadingSpinner'
 
 const ReviewAlbum = () => {
+    const [disabledBtn, setDisabledBtn] = useState(true);
+    const [error, setError] = useState(false);
     const [likedPhotos, setLikedPhotos] = useState([]);
     const [reviewedPhotos, setReviewedPhotos] = useState([]);
-    const [disabledBtn, setDisabledBtn] = useState(true);
-    const { albumId } = useParams();
+
     const navigate = useNavigate();
-    const {album} = useGetAlbum(albumId);
-    const {photos, loading} = useGetPhotosInAlbum(albumId)
-    const [error, setError] = useState(false);
+    const { albumId } = useParams();
+    const { album } = useGetAlbum(albumId);
+    const { photos, loading } = useGetPhotosInAlbum(albumId)
 
     useEffect(() => {
         // Get photos and add to a review array
@@ -29,9 +30,9 @@ const ReviewAlbum = () => {
                         like: undefined
                     }
                 })
-            )
+            );
             setReviewedPhotos(photoList);
-        }
+        };
         getPhotos();
     }, [photos]);
 
@@ -49,24 +50,8 @@ const ReviewAlbum = () => {
             return;
         } else if (result === true) {
             setDisabledBtn(false);
-        }
-    }, [reviewedPhotos])
-
-    const updatePhotoReaction = (photo, reaction) => {
-        // Map over reviewed photos and update like reaction
-        let updatedArray = reviewedPhotos.map(item => {
-            if (item.id === photo.id) {
-                return {
-                    id: item.id,
-                    like: reaction
-                }
-            } else {
-                return item;
-            }
-        })
-        setReviewedPhotos(updatedArray);
-        toggleThumbs(photo.id, reaction);
-    }
+        };
+    }, [reviewedPhotos]);
 
     const handleSendReview = async () => {
         console.log('sent review', reviewedPhotos);
@@ -90,7 +75,7 @@ const ReviewAlbum = () => {
         } catch (err) {
             setError(err.message);
         }
-    }
+    };
 
     const toggleThumbs = (id, reaction) => {
         let card = document.getElementById(id);
@@ -100,8 +85,24 @@ const ReviewAlbum = () => {
         } else if (reaction === false) {
             card.getElementsByClassName('thumbs-down')[0].classList.add('thumb-active');
             card.getElementsByClassName('thumbs-up')[0].classList.remove('thumb-active');
-        }
-    }
+        };
+    };
+
+    const updatePhotoReaction = (photo, reaction) => {
+        // Map over reviewed photos and update like reaction
+        let updatedArray = reviewedPhotos.map(item => {
+            if (item.id === photo.id) {
+                return {
+                    id: item.id,
+                    like: reaction
+                }
+            } else {
+                return item;
+            };
+        });
+        setReviewedPhotos(updatedArray);
+        toggleThumbs(photo.id, reaction);
+    };
 
     return (
         <Container fluid className="px-4">
@@ -110,20 +111,21 @@ const ReviewAlbum = () => {
 
             <SRLWrapper>
                 <Row className="justify-content-md-center">
-                    {loading
-                        ? (
-                            <LoadingSpinner />
-                        )
-                        : (
-                            photos.map(photo => (
-                                <PhotoGrid 
-                                    photo={photo} 
-                                    albumId={albumId} 
-                                    updatePhotoReaction={updatePhotoReaction} 
-                                    key={photo.id} 
-                                    />
-                            ))
-                        )  
+                    {
+                        loading
+                            ? (
+                                <LoadingSpinner />
+                            )
+                            : (
+                                photos.map(photo => (
+                                    <PhotoGrid 
+                                        photo={photo} 
+                                        albumId={albumId} 
+                                        updatePhotoReaction={updatePhotoReaction} 
+                                        key={photo.id} 
+                                        />
+                                ))
+                            )  
                     }
                 </Row>
             </SRLWrapper>
@@ -151,6 +153,6 @@ const ReviewAlbum = () => {
             }
         </Container>
     )
-}
+};
 
 export default ReviewAlbum
