@@ -40,6 +40,14 @@ const Albums = () => {
                             ? (
                                 <LoadingSpinner />
                             ) : (
+                                albums.length < 1 ? (
+                                    <div className="d-flex flex-column justify-content-center align-items-center">
+                                        <p className="text-center">There are no albums to be found. Why don't you create one?</p>
+                                        <div className="text-center mb-4">
+                                            <Link to="/upload" className="btn btn-standard">Create a new album</Link>
+                                        </div>
+                                    </div>
+                                ) : (
                                 albums.map((album) => (
                                     <Col key={album.id} xs={12} sm={6} md={4} lg={3}>
                                         <Card>
@@ -63,7 +71,7 @@ const Albums = () => {
                                         </Card>
                                     </Col>
                                 ))
-                            )
+                            ))
                     }
                 </Row>
             </Container>

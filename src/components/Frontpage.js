@@ -17,7 +17,7 @@ const Frontpage = () => {
                     {
                         authUser ? (
                             <Link to="/upload">
-                                <Button className="mt-3 btn-standard" size="lg">Upload Photos</Button>
+                                <Button className="mt-3 btn-standard" size="lg">Start Creating</Button>
                             </Link>
                         ) : (
                             <Link to="/register">

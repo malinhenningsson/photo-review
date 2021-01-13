@@ -75,7 +75,9 @@ const PhotoUpload = ({ albumId }) => {
 
                 {
                     message && (
-                        <Alert className="mt-2" variant={message.error ? "danger" : "success"}>{message.text}</Alert>
+                        <div className="info-message">
+                            <p>{message.text}</p>
+                        </div>
                     )
                 }
             </div>

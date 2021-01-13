@@ -108,7 +108,7 @@ const Album = () => {
             <header>
                 <h1 className="text-center">{album && album.title}</h1>
                 <p className="text-center mx-2 album-description">{album && album.description}</p>
-                <div className="d-flex justify-content-between mb-3">
+                <div className="d-flex justify-content-center flex-wrap mb-3 album-buttons">
                     <div>
                         <button 
                             className="btn btn-standard" 
@@ -135,7 +135,9 @@ const Album = () => {
             <Container fluid className="px-4 mt-4 mb-5">
                 {
                     reviewLink && (
-                        <p>Review link: <a href={reviewLink}>{reviewLink}</a></p>
+                        <div className="review-link-wrapper">
+                            <p>Review link: <a href={reviewLink}>{reviewLink}</a></p>
+                        </div>
                     )
                 }
 
@@ -161,14 +163,14 @@ const Album = () => {
                                 : (
                                     photos.length < 1 ? (
                                         <div className="d-flex flex-column justify-content-center align-items-center">
-                                            <p>This albums is empty. Why don't you add some?</p>
+                                            <p className="text-center">This albums is empty. Why don't you add some?</p>
                                             <button className="btn btn-standard ms-2" onClick={() => {setUploadNewPhotos(!uploadNewPhotos)}}>
-                                            {
-                                                uploadNewPhotos 
-                                                ? "Hide uploader" 
-                                                : "Add photos"
-                                            }
-                                        </button>
+                                                {
+                                                    uploadNewPhotos 
+                                                    ? "Hide uploader" 
+                                                    : "Add photos"
+                                                }
+                                            </button>
                                         </div>
                                     ) : (
                                         photos.map(photo => (
