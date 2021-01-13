@@ -4,11 +4,33 @@
 
 $color-main-green: #25393A;
 $color-light-green: #63747A;
+$color-main-orange: #ff7925;
+$color-dark-orange: #8C4A20;
 
 
 body {
     background-color: $color-light-green;
-    color: #333;
+    color: #fff;
+}
+
+a {
+    color: $color-main-orange;
+    text-decoration: none;
+
+}
+a:hover {
+    color: $color-dark-orange;
+}
+
+.btn-standard {
+    background-color: $color-main-orange;
+    border: none;
+}
+.btn-standard:hover,
+.btn-standard:visited,
+.btn-standard:active,
+.btn-standard:disabled {
+    background-color: $color-dark-orange;
 }
 
 // Navigation styling
@@ -52,7 +74,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
+
     .frontpage-content {
         text-align: center;
         margin: 1.5em;
@@ -66,6 +88,11 @@ body {
     flex-direction: column;
     justify-content: center;
     margin: 0;
+}
+div.card {
+    background-color: $color-main-green;
+    -webkit-box-shadow: 0px 6px 8px 1px rgba(0,0,0,0.24); 
+    box-shadow: 0px 6px 8px 1px rgba(0,0,0,0.2);
 }
 
 // Photo upload styling

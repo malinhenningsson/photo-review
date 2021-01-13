@@ -41,7 +41,7 @@ const Register = () => {
 		<div className="form-wrapper">
 			<Row className="m-0">
 				<Col md={{ span: 6, offset: 3}}>
-					<Card bg="dark" text="white">
+					<Card text="white" className="form-box">
 						<Card.Body>
 							<Card.Title className="text-center">Sign Up</Card.Title>
 
@@ -61,7 +61,7 @@ const Register = () => {
 									<Form.Control type="password" ref={passwordConfirmRef} required />
 								</Form.Group>
 
-								<Button variant="light" type="submit" className="mt-3" disabled={loading}>Sign Up</Button>
+								<Button type="submit" className="mt-3 btn-standard" disabled={loading}>Sign Up</Button>
 							</Form>
 							{
 								error && (

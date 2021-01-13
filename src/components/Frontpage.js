@@ -15,11 +15,11 @@ const Frontpage = () => {
                 {
                     authUser ? (
                         <Link to="/upload">
-                            <Button className="mt-3" variant="light" size="lg">Upload Photos</Button>
+                            <Button className="mt-3 btn-standard" size="lg">Upload Photos</Button>
                         </Link>
                     ) : (
                         <Link to="/register">
-                            <Button className="mt-3" variant="light" size="lg">Join For Free</Button>
+                            <Button className="mt-3 btn-standard" size="lg">Join For Free</Button>
                         </Link>
                     )
                 }

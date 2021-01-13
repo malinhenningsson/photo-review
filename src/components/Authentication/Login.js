@@ -32,7 +32,7 @@ const Login = () => {
 		<div className="form-wrapper">
 			<Row className="m-0">
 				<Col md={{ span: 6, offset: 3}}>
-					<Card bg="dark" text="white">
+					<Card text="white" className="form-box">
 						<Card.Body>
 							<Card.Title className="text-center">Log In</Card.Title>
 
@@ -47,7 +47,7 @@ const Login = () => {
 									<Form.Control type="password" ref={passwordRef} required />
 								</Form.Group>
 
-								<Button variant="light" type="submit" className="mt-3" disabled={loading}>Log In</Button>
+								<Button type="submit" className="mt-3 btn-standard" disabled={loading}>Log In</Button>
 							</Form>
 							{
 								error && (
