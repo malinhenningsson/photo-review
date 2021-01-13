@@ -50,7 +50,7 @@ const Albums = () => {
                                 ) : (
                                 albums.map((album) => (
                                     <Col key={album.id} xs={12} sm={6} md={4} lg={3}>
-                                        <Card>
+                                        <Card className="mb-4">
                                             <Link to={`/albums/${album.id}`}>
                                                 <Card.Img variant="top" src={DefaultFolder} />
                                             </Link>
