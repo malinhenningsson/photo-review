@@ -33,6 +33,7 @@ const PhotoGrid = ({ photo, albumId, handleDeletePhoto, updateSelectedPhotos, up
                                         onClick={() => handleDeletePhoto(photo, albumId)}>
                                             <FontAwesomeIcon 
                                                 icon={faTrashAlt}
+                                                style={{ color: "#fff"}}
                                             />
                                     </button>
                                 </div>

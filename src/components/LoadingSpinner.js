@@ -4,8 +4,8 @@ import { Spinner } from 'react-bootstrap'
 const LoadingSpinner = () => {
     return (
         <div>
-            <Spinner animation="border" role="status">
-                <span className="sr-only">Loading...</span>
+            <Spinner animation="border text-warning" role="status">
+                <span className="visually-hidden">Loading...</span>
             </Spinner>
         </div>
     )

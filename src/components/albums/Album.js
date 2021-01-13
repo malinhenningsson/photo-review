@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Alert, Button, Container, Row } from 'react-bootstrap'
+import { Alert, Container, Row } from 'react-bootstrap'
 import { useParams, useNavigate } from 'react-router-dom'
 import useGetAlbum from '../../hooks/useGetAlbum'
 import useGetPhotosInAlbum from '../../hooks/useGetPhotosInAlbum'
@@ -110,25 +110,25 @@ const Album = () => {
 
             <div className="d-flex justify-content-between mb-3">
                 <div>
-                    <Button 
-                        variant="dark" 
+                    <button 
+                        className="btn btn-standard" 
                         onClick={() => {navigate(`/albums/edit/${albumId}`)}}>
                             Edit album info
-                    </Button>
-                    <Button 
-                    variant="dark" 
-                    onClick={() => {handleCreateReviewLink(albumId)}}>
+                    </button>
+                    <button 
+                        className="btn btn-standard ms-2" 
+                        onClick={() => {handleCreateReviewLink(albumId)}}>
                         Create client review
-                    </Button>
+                    </button>
                 </div>
 
-                <Button variant="dark" onClick={() => {setUploadNewPhotos(!uploadNewPhotos)}}>
+                <button className="btn btn-standard ms-2" onClick={() => {setUploadNewPhotos(!uploadNewPhotos)}}>
                     {
                         uploadNewPhotos 
                         ? "Hide uploader" 
                         : "Add photos"
                     }
-                </Button>
+                </button>
             </div>
 
             {
@@ -176,19 +176,18 @@ const Album = () => {
                     <div className="text-center mt-3">
                         <p>Selected photos: {selectedPhotos.length}</p>
                         <div className="d-flex justify-content-center">
-                            <Button 
+                            <button 
                                 disabled={btnDisabled} 
-                                variant="dark" 
-                                className="mr-3" 
+                                className="btn btn-standard" 
                                 onClick={handleCreateNewAlbum}>
                                     Create new album
-                            </Button>
-                            <Button 
+                            </button>
+                            <button 
                                 disabled={btnDisabled} 
-                                variant="danger" 
+                                className="btn btn-standard ms-3"
                                 onClick={() => handleDeletePhoto(selectedPhotos)}>
                                     Delete photos
-                            </Button>
+                            </button>
                         </div>
                     </div>
                 )

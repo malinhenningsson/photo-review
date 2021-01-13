@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { Form, Button, Alert, Container, Spinner } from 'react-bootstrap'
+import { Form, Alert, Container } from 'react-bootstrap'
 import { useAuthContext } from '../../contexts/AuthContext'
 import useGetAlbum from '../../hooks/useGetAlbum';
 import { db } from '../../firebase'
@@ -73,7 +73,7 @@ const EditAlbum = () => {
                                 />
                                 {
                                 titleRef.current && titleRef.current.value.length < 3 && (
-                                    <Form.Text className="text-danger">
+                                    <Form.Text className="text-light">
                                         Please enter a title at least 3 characters long.
                                     </Form.Text> )
                                 }
@@ -88,7 +88,7 @@ const EditAlbum = () => {
                                 />
                         </Form.Group>
 
-                        <Button variant="dark" disabled={btnDisabled} type="submit">Save</Button>
+                        <button className="btn btn-standard mt-3" disabled={btnDisabled} type="submit">Save</button>
                     </Form>
 
                 )

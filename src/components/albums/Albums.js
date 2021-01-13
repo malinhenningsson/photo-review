@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuthContext } from '../../contexts/AuthContext'
-import { Spinner, Container, Card, Row, Col, Button } from 'react-bootstrap'
+import { Container, Card, Row, Col } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import DefaultFolder from '../../assets/images/default-folder.png'
+import DefaultFolder from '../../assets/images/default-folder-2.png'
 import useGetAlbums from '../../hooks/useGetAlbums';
 import useDeleteAlbum from '../../hooks/useDeleteAlbum'
 import LoadingSpinner from '../LoadingSpinner'
@@ -28,7 +28,7 @@ const Albums = () => {
 
             { authUser && (
 				<div className="text-center mb-4">
-					<Link to="/upload" className="btn btn-dark mt-4">Create a new album</Link>
+					<Link to="/upload" className="btn btn-standard mt-4">Create a new album</Link>
 				</div>
 			)}
 
@@ -45,13 +45,13 @@ const Albums = () => {
                                             <Card.Img variant="top" src={DefaultFolder} />
                                         </Link>
                                         <Card.Body className="d-flex justify-content-between">
-                                            <Link to={`/albums/${album.id}`} style={{ color: "#333" }}>
+                                            <Link to={`/albums/${album.id}`} style={{ color: "#fff"}}>
                                                 <Card.Title>
                                                     {album.title}
                                                 </Card.Title>
                                             </Link>
                                             <button 
-                                                style={{ border: "none", backgroundColor: "transparent" }} 
+                                                style={{ border: "none", backgroundColor: "transparent", color: "#fff" }} 
                                                 onClick={() => handleDeleteAlbum(album)}>
                                                     <FontAwesomeIcon 
                                                         icon={faTrashAlt}

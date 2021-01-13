@@ -66,7 +66,7 @@ const Upload = () => {
                         />
                 </Form.Group>
 
-                <Button variant="dark" disabled={loading} type="submit">Create</Button>
+                <button className="btn btn-standard mt-3" disabled={loading} type="submit">Create</button>
             </Form>
             {
                 error && (

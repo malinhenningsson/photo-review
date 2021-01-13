@@ -135,13 +135,12 @@ const ReviewAlbum = () => {
                     <div className="text-center mt-3">
                         <p>Liked photos: {likedPhotos.length} / {photos.length}</p>
                         <div className="d-flex justify-content-center">
-                            <Button 
+                            <button 
                                 disabled={disabledBtn} 
-                                variant="dark" 
-                                className="mr-3" 
+                                className="btn btn-standard" 
                                 onClick={handleSendReview}>
                                     Send Review
-                            </Button>
+                            </button>
                         </div>
                         {
                             error && (

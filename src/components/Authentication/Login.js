@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { Row, Col, Form, Button, Card, Alert } from 'react-bootstrap'
+import { Row, Col, Form, Card, Alert } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuthContext } from '../../contexts/AuthContext'
 
@@ -47,7 +47,7 @@ const Login = () => {
 									<Form.Control type="password" ref={passwordRef} required />
 								</Form.Group>
 
-								<Button type="submit" className="mt-3 btn-standard" disabled={loading}>Log In</Button>
+								<button type="submit" className="btn mt-3 btn-standard" disabled={loading}>Log In</button>
 							</Form>
 							{
 								error && (

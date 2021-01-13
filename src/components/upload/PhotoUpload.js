@@ -66,7 +66,7 @@ const PhotoUpload = ({ albumId }) => {
                                 strokeWidth={50} 
                                 styles={buildStyles({
                                     strokeLinecap: "butt",
-                                    pathColor: "lavender",
+                                    pathColor: "#f57423",
                                     trailColor: "transparent"
                                     })} />
                         </div>

@@ -4,7 +4,7 @@
 
 $color-main-green: #25393A;
 $color-light-green: #63747A;
-$color-main-orange: #ff7925;
+$color-main-orange: #f57423;
 $color-dark-orange: #8C4A20;
 
 
@@ -24,13 +24,13 @@ a:hover {
 
 .btn-standard {
     background-color: $color-main-orange;
+    color: #fff;
     border: none;
 }
 .btn-standard:hover,
-.btn-standard:visited,
-.btn-standard:active,
 .btn-standard:disabled {
     background-color: $color-dark-orange;
+    color: #cecece;
 }
 
 // Navigation styling
@@ -63,10 +63,10 @@ a:hover {
 
 // Frontpage Styling
 .frontpage-wrapper {
-    background: linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) ), url('../images/photo-background2.jpg');
+    background: linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) ), url('../images/photo-background.jpg');
     background-size: cover;
     background-position: center;
-    background-color: #333;
+    background-color: $color-main-green;
     color: #fff;
 
     height: 95vh;
@@ -93,12 +93,13 @@ div.card {
     background-color: $color-main-green;
     -webkit-box-shadow: 0px 6px 8px 1px rgba(0,0,0,0.24); 
     box-shadow: 0px 6px 8px 1px rgba(0,0,0,0.2);
+    border: none;
 }
 
 // Photo upload styling
 .photo-upload-zone {
     padding: 1em 2em;
-    background-color: #333;
+    background-color: $color-main-green;
     color: #fff;
     border: 1px dashed #fff;
     margin: 1em 0;
@@ -108,8 +109,8 @@ div.card {
 // Review album
 .thumbs-up,
 .thumbs-down {
-    color: gray;
+    color: $color-light-green;
 }
 .thumb-active {
-    color: rgb(71, 71, 241);
+    color: $color-main-orange;
 }
