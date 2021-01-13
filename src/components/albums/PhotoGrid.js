@@ -15,7 +15,7 @@ const PhotoGrid = ({ photo, albumId, handleDeletePhoto, updateSelectedPhotos, up
                     </a>
                     <Card.Body className="d-flex justify-content-between" id={photo.id}>
                         {
-                            authUser.uid === photo.owner ? (
+                            authUser && authUser.uid === photo.owner ? (
                                 <>
                                     <div>
                                         <input 
