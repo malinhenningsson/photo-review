@@ -9,7 +9,7 @@ const PhotoGrid = ({ photo, albumId, handleDeletePhoto, updateSelectedPhotos, up
 
     return (
         <Col xs={12} sm={6} md={4} lg={3} key={photo.id}>
-            <Card>
+            <Card className="mb-4">
                 <a href={photo.url} >
                     <Card.Img variant="top" src={photo.url} />
                 </a>

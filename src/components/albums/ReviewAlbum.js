@@ -105,7 +105,7 @@ const ReviewAlbum = () => {
     };
 
     return (
-        <Container fluid className="px-4">
+        <Container fluid className="px-4 mt-4 mb-5">
             <h2 className="text-center">Review for: {album && album.title}</h2>
             <p className="text-center mb-2">{album && album.description}</p>
 

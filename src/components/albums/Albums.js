@@ -23,7 +23,7 @@ const Albums = () => {
     }
 
     return (
-        <Container fluid className="px-4">
+        <Container fluid className="px-4 mt-4 mb-5">
 			<h2 className="text-center">Albums</h2>
 
             { authUser && (
@@ -32,7 +32,7 @@ const Albums = () => {
 				</div>
 			)}
 
-            <Row className="justify-content-md-center">
+            <Row className="justify-content-md-center my-4">
                 {
                     loading
                         ? (

@@ -37,7 +37,7 @@ const Upload = () => {
     }
 
     return (
-        <Container>
+        <Container className="px-4 mt-4 mb-5">
             <h1 className="text-center">Create a new album</h1>
 
             <Form onSubmit={handleSubmit}>
