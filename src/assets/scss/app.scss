@@ -2,9 +2,41 @@
 
 @import "~bootstrap/scss/bootstrap";
 
+$color-main-green: #25393A;
+$color-light-green: #63747A;
+
+
 body {
-    background-color: #fff;
+    background-color: $color-light-green;
     color: #333;
+}
+
+// Navigation styling
+.navbar {
+    -webkit-box-shadow: 0px 6px 8px 1px rgba(0,0,0,0.24); 
+    box-shadow: 0px 6px 8px 1px rgba(0,0,0,0.2);
+    background-color: $color-main-green;
+    a.navbar-brand {
+        color: #fff;
+    }
+    a.navbar-brand:hover {
+        color: $color-light-green;
+    }
+    a.navbar-brand:visited {
+        color: #fff
+    }
+    .navbar-nav .nav-link {
+        color: #fff;
+    }
+    .navbar-nav a.nav-link:hover {
+        color: $color-light-green;
+    }
+    .navbar-nav a.nav-link.active {
+        color: #878A86
+    }
+    .navbar-toggler {
+        border: none;
+    }
 }
 
 // Frontpage Styling

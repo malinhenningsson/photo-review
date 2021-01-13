@@ -7,6 +7,7 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import DefaultFolder from '../../assets/images/default-folder.png'
 import useGetAlbums from '../../hooks/useGetAlbums';
 import useDeleteAlbum from '../../hooks/useDeleteAlbum'
+import LoadingSpinner from '../LoadingSpinner'
 
 const Albums = () => {
     const [deleteAlbum, setDeleteAlbum] = useState(null);
@@ -35,9 +36,7 @@ const Albums = () => {
                 {
                     loading
                         ? (
-                            <Spinner animation="border" role="status">
-                                <span className="sr-only">Loading...</span>
-                            </Spinner>
+                            <LoadingSpinner />
                         ) : (
                             albums.map((album) => (
                                 <Col key={album.id} xs={12} sm={6} md={4} lg={3}>

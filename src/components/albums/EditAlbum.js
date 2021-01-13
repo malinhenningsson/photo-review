@@ -4,6 +4,7 @@ import { Form, Button, Alert, Container, Spinner } from 'react-bootstrap'
 import { useAuthContext } from '../../contexts/AuthContext'
 import useGetAlbum from '../../hooks/useGetAlbum';
 import { db } from '../../firebase'
+import LoadingSpinner from '../LoadingSpinner'
 
 const EditAlbum = () => {
     const titleRef = useRef();
@@ -58,9 +59,7 @@ const EditAlbum = () => {
             {
                 loading 
                 ? (
-                    <Spinner animation="border" role="status">
-                        <span className="sr-only">Loading...</span>
-                    </Spinner>
+                    <LoadingSpinner />
                 )
                 : (
                     <Form onSubmit={handleSubmit}>

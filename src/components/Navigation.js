@@ -1,37 +1,50 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { Navbar, Nav } from 'react-bootstrap'
 import { useAuthContext } from '../contexts/AuthContext'
 
 const Navigation = () => {
     const { authUser } = useAuthContext();
 
     return (
-        <Navbar collapseOnSelect expand="lg" variant="light">
-            <Link to="/" className="navbar-brand">
-                Photo Review 📸
-            </Link>
-            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                <Navbar.Collapse id="responsive-navbar-nav">
-                    <Nav className="ml-auto">
+        <nav className="navbar navbar-expand-lg navbar-dark">
+            <div className="container-fluid">
+                <Link to="/" className="navbar-brand">
+                    Photo Review 📸
+                </Link>
+                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+                <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
+                    <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                         {
-                            authUser 
-                            ? (
-                                <>
-                                    <NavLink to="/albums" className="nav-link">Albums</NavLink>
-                                    <NavLink to="/upload" className="nav-link">Upload</NavLink>
-                                    <NavLink to="/logout" className="nav-link">Log Out</NavLink>
-                                </>
-                            ) : (
-                                <>
-                                    <NavLink to="/login" className="nav-link">Log In</NavLink>
-                                    <NavLink to="/register" className="nav-link">Sign Up</NavLink>
-                                </>
-                            )
-                        }
-                    </Nav>
-                </Navbar.Collapse>
-        </Navbar>
+                                authUser 
+                                ? (
+                                    <>
+                                        <li className="nav-item">
+                                            <NavLink to="/albums" className="nav-link">Albums</NavLink>
+                                        </li>
+                                        <li className="nav-item">
+                                            <NavLink to="/upload" className="nav-link">Upload</NavLink>
+                                        </li>
+                                        <li className="nav-item">
+                                            <NavLink to="/logout" className="nav-link">Log Out</NavLink>
+                                        </li>
+                                    </>
+                                ) : (
+                                    <>
+                                        <li className="nav-item">
+                                            <NavLink to="/login" className="nav-link">Log In</NavLink>
+                                        </li>
+                                        <li className="nav-item">
+                                            <NavLink to="/register" className="nav-link">Sign Up</NavLink>
+                                        </li>
+                                    </>
+                                )
+                            }
+                    </ul>
+                </div>
+            </div>
+        </nav>
     )
 }
 
