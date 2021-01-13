@@ -104,95 +104,111 @@ const Album = () => {
     };
 
     return (
-        <Container fluid className="px-4 mt-4 mb-5">
-            <h2 className="text-center">{album && album.title}</h2>
-            <p className="text-center mb-2">{album && album.description}</p>
+        <>
+            <header>
+                <h1 className="text-center">{album && album.title}</h1>
+                <p className="text-center mx-2 album-description">{album && album.description}</p>
+                <div className="d-flex justify-content-between mb-3">
+                    <div>
+                        <button 
+                            className="btn btn-standard" 
+                            onClick={() => {navigate(`/albums/edit/${albumId}`)}}>
+                                Edit album info
+                        </button>
+                        <button 
+                            className="btn btn-standard ms-2" 
+                            onClick={() => {handleCreateReviewLink(albumId)}}>
+                            Create client review
+                        </button>
+                    </div>
 
-            <div className="d-flex justify-content-between mb-3">
-                <div>
-                    <button 
-                        className="btn btn-standard" 
-                        onClick={() => {navigate(`/albums/edit/${albumId}`)}}>
-                            Edit album info
-                    </button>
-                    <button 
-                        className="btn btn-standard ms-2" 
-                        onClick={() => {handleCreateReviewLink(albumId)}}>
-                        Create client review
+                    <button className="btn btn-standard ms-2" onClick={() => {setUploadNewPhotos(!uploadNewPhotos)}}>
+                        {
+                            uploadNewPhotos 
+                            ? "Hide uploader" 
+                            : "Add photos"
+                        }
                     </button>
                 </div>
+            </header>
 
-                <button className="btn btn-standard ms-2" onClick={() => {setUploadNewPhotos(!uploadNewPhotos)}}>
-                    {
-                        uploadNewPhotos 
-                        ? "Hide uploader" 
-                        : "Add photos"
-                    }
-                </button>
-            </div>
+            <Container fluid className="px-4 mt-4 mb-5">
+                {
+                    reviewLink && (
+                        <p>Review link: <a href={reviewLink}>{reviewLink}</a></p>
+                    )
+                }
 
-            {
-                reviewLink && (
-                    <p>Review link: <a href={reviewLink}>{reviewLink}</a></p>
-                )
-            }
+                {
+                    uploadNewPhotos && (
+                        <PhotoUpload albumId={albumId} />
+                    )
+                }
 
-            {
-                uploadNewPhotos && (
-                    <PhotoUpload albumId={albumId} />
-                )
-            }
+                {
+                    error && (
+                        <Alert variant="danger">{error}</Alert>
+                    )
+                }
 
-            {
-                error && (
-                    <Alert variant="danger">{error}</Alert>
-                )
-            }
+                <SRLWrapper>
+                    <Row className="justify-content-md-center my-4">
+                        {
+                            loading
+                                ? (
+                                    <LoadingSpinner />
+                                )
+                                : (
+                                    photos.length < 1 ? (
+                                        <div className="d-flex flex-column justify-content-center align-items-center">
+                                            <p>This albums is empty. Why don't you add some?</p>
+                                            <button className="btn btn-standard ms-2" onClick={() => {setUploadNewPhotos(!uploadNewPhotos)}}>
+                                            {
+                                                uploadNewPhotos 
+                                                ? "Hide uploader" 
+                                                : "Add photos"
+                                            }
+                                        </button>
+                                        </div>
+                                    ) : (
+                                        photos.map(photo => (
+                                            <PhotoGrid 
+                                                photo={photo} 
+                                                albumId={albumId} 
+                                                updateSelectedPhotos={updateSelectedPhotos} 
+                                                handleDeletePhoto={handleDeletePhoto}
+                                                key={photo.id} 
+                                                />
+                                        ))
+                                    )
+                                )  
+                        }
+                    </Row>
+                </SRLWrapper>
 
-            <SRLWrapper>
-                <Row className="justify-content-md-center my-4">
-                    {
-                        loading
-                            ? (
-                                <LoadingSpinner />
-                            )
-                            : (
-                                photos.map(photo => (
-                                    <PhotoGrid 
-                                        photo={photo} 
-                                        albumId={albumId} 
-                                        updateSelectedPhotos={updateSelectedPhotos} 
-                                        handleDeletePhoto={handleDeletePhoto}
-                                        key={photo.id} 
-                                        />
-                                ))
-                            )  
-                    }
-                </Row>
-            </SRLWrapper>
-
-            {
-                selectedPhotos.length > 0 && (
-                    <div className="text-center mt-3">
-                        <p>Selected photos: {selectedPhotos.length}</p>
-                        <div className="d-flex justify-content-center">
-                            <button 
-                                disabled={btnDisabled} 
-                                className="btn btn-standard" 
-                                onClick={handleCreateNewAlbum}>
-                                    Create new album
-                            </button>
-                            <button 
-                                disabled={btnDisabled} 
-                                className="btn btn-standard ms-3"
-                                onClick={() => handleDeletePhoto(selectedPhotos)}>
-                                    Delete photos
-                            </button>
+                {
+                    selectedPhotos.length > 0 && (
+                        <div className="text-center mt-3">
+                            <p>Selected photos: {selectedPhotos.length}</p>
+                            <div className="d-flex justify-content-center">
+                                <button 
+                                    disabled={btnDisabled} 
+                                    className="btn btn-standard" 
+                                    onClick={handleCreateNewAlbum}>
+                                        Create new album
+                                </button>
+                                <button 
+                                    disabled={btnDisabled} 
+                                    className="btn btn-standard ms-3"
+                                    onClick={() => handleDeletePhoto(selectedPhotos)}>
+                                        Delete photos
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                )
-            }
-        </Container>
+                    )
+                }
+            </Container>
+        </>
     )
 }
 

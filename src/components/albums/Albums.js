@@ -23,48 +23,51 @@ const Albums = () => {
     }
 
     return (
-        <Container fluid className="px-4 mt-4 mb-5">
-			<h2 className="text-center">Albums</h2>
+        <>
+            <header>
+			    <h1 className="text-center">Albums</h1>
+                { authUser && (
+                    <div className="text-center mb-4">
+                        <Link to="/upload" className="btn btn-standard">Create a new album</Link>
+                    </div>
+                )}
+            </header>
 
-            { authUser && (
-				<div className="text-center mb-4">
-					<Link to="/upload" className="btn btn-standard mt-4">Create a new album</Link>
-				</div>
-			)}
-
-            <Row className="justify-content-md-center my-4">
-                {
-                    loading
-                        ? (
-                            <LoadingSpinner />
-                        ) : (
-                            albums.map((album) => (
-                                <Col key={album.id} xs={12} sm={6} md={4} lg={3}>
-                                    <Card>
-                                        <Link to={`/albums/${album.id}`}>
-                                            <Card.Img variant="top" src={DefaultFolder} />
-                                        </Link>
-                                        <Card.Body className="d-flex justify-content-between">
-                                            <Link to={`/albums/${album.id}`} style={{ color: "#fff"}}>
-                                                <Card.Title>
-                                                    {album.title}
-                                                </Card.Title>
+            <Container fluid className="px-4 mt-4 mb-5">
+                <Row className="justify-content-md-center my-4">
+                    {
+                        loading
+                            ? (
+                                <LoadingSpinner />
+                            ) : (
+                                albums.map((album) => (
+                                    <Col key={album.id} xs={12} sm={6} md={4} lg={3}>
+                                        <Card>
+                                            <Link to={`/albums/${album.id}`}>
+                                                <Card.Img variant="top" src={DefaultFolder} />
                                             </Link>
-                                            <button 
-                                                style={{ border: "none", backgroundColor: "transparent", color: "#fff" }} 
-                                                onClick={() => handleDeleteAlbum(album)}>
-                                                    <FontAwesomeIcon 
-                                                        icon={faTrashAlt}
-                                                    />
-                                            </button>
-                                        </Card.Body>
-                                    </Card>
-                                </Col>
-                            ))
-                        )
-                }
-            </Row>
-		</Container>
+                                            <Card.Body className="d-flex justify-content-between">
+                                                <Link to={`/albums/${album.id}`} style={{ color: "#fff"}}>
+                                                    <Card.Title>
+                                                        {album.title}
+                                                    </Card.Title>
+                                                </Link>
+                                                <button 
+                                                    style={{ border: "none", backgroundColor: "transparent", color: "#fff" }} 
+                                                    onClick={() => handleDeleteAlbum(album)}>
+                                                        <FontAwesomeIcon 
+                                                            icon={faTrashAlt}
+                                                        />
+                                                </button>
+                                            </Card.Body>
+                                        </Card>
+                                    </Col>
+                                ))
+                            )
+                    }
+                </Row>
+            </Container>
+        </>
     )
 }
 

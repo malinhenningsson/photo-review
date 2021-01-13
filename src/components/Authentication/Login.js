@@ -34,7 +34,9 @@ const Login = () => {
 				<Col md={{ span: 6, offset: 3}}>
 					<Card text="white" className="form-box">
 						<Card.Body>
-							<Card.Title className="text-center">Log In</Card.Title>
+							<Card.Title className="text-center">
+								<h2>Log In</h2>
+							</Card.Title>
 
 							<Form onSubmit={handleSubmit}>
 								<Form.Group id="email">

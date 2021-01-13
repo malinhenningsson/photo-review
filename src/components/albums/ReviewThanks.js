@@ -5,11 +5,14 @@ import { Row, Col, Card, Container } from 'react-bootstrap'
 const ReviewThanks = () => {
     return (
         <Container>
+		<div className="form-wrapper">
 			<Row className="m-0">
 				<Col md={{ span: 6, offset: 3}}>
-					<Card bg="dark" text="white">
+					<Card text="white" className="card py-3">
 						<Card.Body className="text-center">
-							<Card.Title>Thanks for your photo review!</Card.Title>
+							<Card.Title>
+								<h2>Thanks for your photo review!</h2>
+							</Card.Title>
                                 <Card.Text>
                                         If you like this service, please tell your friends. <br/> 
                                         Or why not start your own account? <br/>
@@ -19,6 +22,7 @@ const ReviewThanks = () => {
 					</Card>
 				</Col>
 			</Row>
+		</div>
 		</Container>
     )
 }

@@ -43,7 +43,9 @@ const Register = () => {
 				<Col md={{ span: 6, offset: 3}}>
 					<Card text="white" className="form-box">
 						<Card.Body>
-							<Card.Title className="text-center">Sign Up</Card.Title>
+							<Card.Title className="text-center">
+								<h2>Sign Up</h2>
+							</Card.Title>
 
 							<Form onSubmit={handleSubmit}>
 								<Form.Group id="email">

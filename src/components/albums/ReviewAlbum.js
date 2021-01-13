@@ -105,52 +105,56 @@ const ReviewAlbum = () => {
     };
 
     return (
-        <Container fluid className="px-4 mt-4 mb-5">
-            <h2 className="text-center">Review for: {album && album.title}</h2>
-            <p className="text-center mb-2">{album && album.description}</p>
+        <>
+            <header>
+                <h1 className="text-center">Review for: {album && album.title}</h1>
+                <p className="text-center mb-2">{album && album.description}</p>
+            </header>
+            <Container fluid className="px-4 mt-4 mb-5">
 
-            <SRLWrapper>
-                <Row className="justify-content-md-center">
-                    {
-                        loading
-                            ? (
-                                <LoadingSpinner />
-                            )
-                            : (
-                                photos.map(photo => (
-                                    <PhotoGrid 
-                                        photo={photo} 
-                                        albumId={albumId} 
-                                        updatePhotoReaction={updatePhotoReaction} 
-                                        key={photo.id} 
-                                        />
-                                ))
-                            )  
-                    }
-                </Row>
-            </SRLWrapper>
-
-            {
-                reviewedPhotos && likedPhotos.length > 0 && (
-                    <div className="text-center mt-3">
-                        <p>Liked photos: {likedPhotos.length} / {photos.length}</p>
-                        <div className="d-flex justify-content-center">
-                            <button 
-                                disabled={disabledBtn} 
-                                className="btn btn-standard" 
-                                onClick={handleSendReview}>
-                                    Send Review
-                            </button>
-                        </div>
+                <SRLWrapper>
+                    <Row className="justify-content-md-center my-4">
                         {
-                            error && (
-                                <Alert variant="danger">{error}</Alert>
-                            )
+                            loading
+                                ? (
+                                    <LoadingSpinner />
+                                )
+                                : (
+                                    photos.map(photo => (
+                                        <PhotoGrid 
+                                            photo={photo} 
+                                            albumId={albumId} 
+                                            updatePhotoReaction={updatePhotoReaction} 
+                                            key={photo.id} 
+                                            />
+                                    ))
+                                )  
                         }
-                    </div>
-                )
-            }
-        </Container>
+                    </Row>
+                </SRLWrapper>
+
+                {
+                    reviewedPhotos && likedPhotos.length > 0 && (
+                        <div className="text-center mt-3">
+                            <p>Liked photos: {likedPhotos.length} / {photos.length}</p>
+                            <div className="d-flex justify-content-center">
+                                <button 
+                                    disabled={disabledBtn} 
+                                    className="btn btn-standard" 
+                                    onClick={handleSendReview}>
+                                        Send Review
+                                </button>
+                            </div>
+                            {
+                                error && (
+                                    <Alert variant="danger">{error}</Alert>
+                                )
+                            }
+                        </div>
+                    )
+                }
+            </Container>
+        </>
     )
 };
 

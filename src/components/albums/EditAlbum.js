@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { Form, Alert, Container } from 'react-bootstrap'
+import { Form, Alert, Container, Card } from 'react-bootstrap'
 import { useAuthContext } from '../../contexts/AuthContext'
 import useGetAlbum from '../../hooks/useGetAlbum';
 import { db } from '../../firebase'
@@ -53,49 +53,58 @@ const EditAlbum = () => {
     }
 
     return (
-        <Container className="px-4 mt-4 mb-5">
-            <h1 className="text-center">Edit album</h1>
+        <>
+            <header>
+                <h1 className="text-center">Edit album</h1>
+            </header>
+            <Container className="px-4 mt-4 mb-5">
 
-            {
-                loading 
-                ? (
-                    <LoadingSpinner />
-                )
-                : (
-                    <Form onSubmit={handleSubmit}>
-                        <Form.Group id="title">
-                            <Form.Label>Album title</Form.Label>
-                            <Form.Control 
-                                type="title" 
-                                ref={titleRef}
-                                defaultValue={album.title} 
-                                required 
-                                />
-                                {
-                                titleRef.current && titleRef.current.value.length < 3 && (
-                                    <Form.Text className="text-light">
-                                        Please enter a title at least 3 characters long.
-                                    </Form.Text> )
-                                }
-                        </Form.Group>
+                {
+                    loading 
+                    ? (
+                        <LoadingSpinner />
+                    )
+                    : (
+                        <Card text="white" className="form-box">
+                            <Card.Body>
+                                <Form onSubmit={handleSubmit}>
+                                    <Form.Group id="title" className="mb-3">
+                                        <Form.Label>Album title</Form.Label>
+                                        <Form.Control 
+                                            type="title" 
+                                            ref={titleRef}
+                                            defaultValue={album.title}
+                                            minLength={3} 
+                                            required 
+                                            />
+                                            <Form.Text muted>
+                                                Please enter a title at least 3 chars long.
+                                            </Form.Text> 
+                                    </Form.Group>
 
-                        <Form.Group id="description">
-                            <Form.Label>Description</Form.Label>
-                            <Form.Control 
-                                type="text" 
-                                ref={descriptionRef}
-                                defaultValue={album.description}
-                                />
-                        </Form.Group>
+                                    <Form.Group id="description">
+                                        <Form.Label>Description</Form.Label>
+                                        <Form.Control 
+                                            type="text" 
+                                            ref={descriptionRef}
+                                            defaultValue={album.description}
+                                            maxLength={100}
+                                            />
+                                        <Form.Text muted>
+                                            Description can be max 100 chars long.
+                                        </Form.Text>
+                                    </Form.Group>
 
-                        <button className="btn btn-standard mt-3" disabled={btnDisabled} type="submit">Save</button>
-                    </Form>
+                                    <button className="btn btn-standard mt-3" disabled={btnDisabled} type="submit">Save</button>
+                                </Form>
+                            </Card.Body>
+                        </Card>
+                    )
+                }
 
-                )
-            }
-
-            {error && (<Alert variant="danger" className="mt-3">{error}</Alert>)}
-        </Container>
+                {error && (<Alert variant="danger" className="mt-3">{error}</Alert>)}
+            </Container>
+        </>
     )
 }
 

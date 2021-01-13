@@ -25,7 +25,7 @@ const PhotoGrid = ({ photo, albumId, handleDeletePhoto, updateSelectedPhotos, up
                                         className="mr-2" 
                                         onChange={updateSelectedPhotos}
                                         />
-                                    <label htmlFor="selected-photo">Select</label>
+                                    <label htmlFor="selected-photo" className="ms-2">Select</label>
                                 </div>
                                 <div>
                                     <button 
