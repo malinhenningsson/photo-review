@@ -82,9 +82,13 @@ const ReviewAlbum = () => {
         if (reaction === true) {
             card.getElementsByClassName('thumbs-up')[0].classList.add('thumb-active');
             card.getElementsByClassName('thumbs-down')[0].classList.remove('thumb-active');
+
+            card.classList.remove('card-inactive')
         } else if (reaction === false) {
             card.getElementsByClassName('thumbs-down')[0].classList.add('thumb-active');
             card.getElementsByClassName('thumbs-up')[0].classList.remove('thumb-active');
+
+            card.classList.add('card-inactive')
         };
     };
 

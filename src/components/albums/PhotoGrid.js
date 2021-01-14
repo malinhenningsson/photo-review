@@ -9,11 +9,11 @@ const PhotoGrid = ({ photo, albumId, handleDeletePhoto, updateSelectedPhotos, up
 
     return (
             <Col xs={12} sm={6} md={4} lg={3} key={photo.id}>
-                <Card className="mb-4">
+                <Card className="mb-4" id={photo.id}>
                     <a href={photo.url} >
                         <Card.Img variant="top" src={photo.url} />
                     </a>
-                    <Card.Body className="d-flex justify-content-between" id={photo.id}>
+                    <Card.Body className="d-flex justify-content-between">
                         {
                             authUser && authUser.uid === photo.owner ? (
                                 <>
