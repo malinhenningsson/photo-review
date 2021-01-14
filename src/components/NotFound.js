@@ -1,10 +1,23 @@
 import React from 'react'
+import { Container, Row, Col, Card } from 'react-bootstrap'
 
 const NotFound = () => {
     return (
-        <div className="text-center mt-5">
-            <h1><code>404 page is not found</code></h1>
-        </div>
+        <Container>
+            <div className="form-wrapper">
+                <Row className="m-0">
+                    <Col md={{ span: 6, offset: 3}}>
+                        <Card text="white" className="card py-3">
+                            <Card.Body className="text-center">
+                                <Card.Title>
+                                    <h2>404 Page Not Found</h2>
+                                </Card.Title>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                </Row>
+            </div>
+        </Container>
     )
 }
 
