@@ -36,13 +36,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 p {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Montserrat', sans-serif;
 }
 
 a {
     color: $color-main-orange;
     text-decoration: none;
-
 }
 a:hover {
     color: $color-dark-orange;
@@ -68,6 +67,8 @@ a:hover {
     background-color: $color-main-green;
     a.navbar-brand {
         color: #fff;
+        font-family: 'Raleway', sans-serif;
+        font-size: 1.5em;
     }
     a.navbar-brand:hover {
         color: $color-light-green;

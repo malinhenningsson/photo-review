@@ -1,7 +1,8 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { useAuthContext } from '../contexts/AuthContext'
-import CameraLens from '../assets/images/camera-lens.png'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCamera } from '@fortawesome/free-solid-svg-icons'
 
 const Navigation = () => {
     const { authUser } = useAuthContext();
@@ -10,8 +11,8 @@ const Navigation = () => {
         <nav className="navbar navbar-expand-lg navbar-dark">
             <div className="container-fluid">
                 <Link to="/" className="navbar-brand">
-                    <img src={CameraLens} alt="camera lens icon" style={{ maxHeight: "1.5em", maxWidth: "1.5em", marginRight: "0.25em"}} />
-                    Photo Review 
+                    <FontAwesomeIcon icon={faCamera} style={{ color: "#fff", fontSize: "1em"}} />
+                    <span style={{ marginLeft: "0.25em" }}>PhotoReview</span>
                 </Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>

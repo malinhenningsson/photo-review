@@ -10,8 +10,8 @@ const Frontpage = () => {
         <Jumbotron fluid>
             <Container>
                 <div className="frontpage-content">
-                    <h1>Review Photos.</h1>
-                    <h2>Collaboration between photographers and clients made easy.</h2>
+                    <h1 className="display-3">Review Photos.</h1>
+                    <p className="display-6">Collaboration between photographers and clients made easy.</p>
 
                     {
                         authUser ? (
