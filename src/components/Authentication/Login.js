@@ -58,7 +58,8 @@ const Login = () => {
 							}
 						</Card.Body>
 					</Card>
-					<div className="text-center mt-2">
+					<div className="text-center mt-3">
+						<p className="mb-1">Don't remember your password? <Link to="/forgot-password">Reset Password</Link></p>
 						<p>Don't have an account? <Link to="/register">Sign Up!</Link></p>
 					</div>
 				</Col>

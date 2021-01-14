@@ -72,7 +72,7 @@ const Register = () => {
 							}
 						</Card.Body>
 					</Card>
-					<div className="text-center mt-2">
+					<div className="text-center mt-3">
 						<p>Already have an account? <Link to="/login">Log In</Link></p>
 					</div>
 				</Col>

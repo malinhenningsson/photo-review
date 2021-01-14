@@ -4,6 +4,7 @@ import Album from './components/Albums/Album'
 import Albums from './components/Albums/Albums'
 import AuthContextProvider from './contexts/AuthContext'
 import EditAlbum from './components/Albums/EditAlbum'
+import ForgotPassword from './components/Authentication/ForgotPassword'
 import Frontpage from './components/Frontpage'
 import Login from './components/Authentication/Login'
 import Logout from './components/Authentication/Logout'
@@ -34,6 +35,10 @@ function App() {
 
 						<Route path="/login">
 							<Login />
+						</Route>
+
+						<Route path="/forgot-password">
+							<ForgotPassword />
 						</Route>
 
 						<ProtectedRoute path="/logout">

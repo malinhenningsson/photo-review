@@ -11,6 +11,10 @@ const AuthContextProvider = (props) => {
     const [authUser, setAuthUser] = useState(null);
 	const [loading, setLoading] = useState(true);
 
+    const forgotPassword = (email) => {
+        return auth.sendPasswordResetEmail(email)
+    }
+
     const login = (email, password) => {
         return auth.signInWithEmailAndPassword(email, password);
     }
@@ -36,6 +40,7 @@ const AuthContextProvider = (props) => {
     const values = {
         authUser,
         loading,
+        forgotPassword,
         login,
         logout,
         register
