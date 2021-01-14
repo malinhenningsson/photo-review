@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { useAuthContext } from '../contexts/AuthContext'
+import CameraLens from '../assets/images/cameralens.png'
 
 const Navigation = () => {
     const { authUser } = useAuthContext();
@@ -9,7 +10,8 @@ const Navigation = () => {
         <nav className="navbar navbar-expand-lg navbar-dark">
             <div className="container-fluid">
                 <Link to="/" className="navbar-brand">
-                    Photo Review 📸
+                    {/* <img src={CameraLens} style={{ maxHeight: "1.5em", maxWidth: "1.5em", marginRight: "0.25em"}} /> */}
+                    Photo Review 
                 </Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
