@@ -3,7 +3,7 @@ import { db, storage } from "../firebase";
 import firebase from 'firebase/app'
 
 const useDeletePhoto = (photo, albumId) => {
-    useEffect(async () => {
+    useEffect(() => {
         if (!photo) {
             return;
         }
@@ -11,7 +11,7 @@ const useDeletePhoto = (photo, albumId) => {
             return;
         }
 
-       (async () => {
+       async function deleteData() {
             if (photo.length > 1) {
                 await photo.forEach(item => {
                     // Remove album-reference in database
@@ -43,7 +43,8 @@ const useDeletePhoto = (photo, albumId) => {
                      }
                  });
             }
-        })();
+        };
+        deleteData();
         
     }, [photo, albumId]);
     return {}

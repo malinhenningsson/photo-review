@@ -3,12 +3,12 @@ import { db, storage } from "../firebase";
 import firebase from 'firebase/app'
 
 const useDeleteAlbum = (album) => {
-    useEffect(async () => {
+    useEffect(() => {
         if (!album) {
             return;
         };
 
-       (async () => {
+       async function deleteData() {
             // get all photos for album
             db.collection('images')
                 .where('album', 'array-contains', db.collection('albums').doc(album.id)).get()
@@ -34,7 +34,8 @@ const useDeleteAlbum = (album) => {
                 }).catch(err => {
                     console.error(err)
                 });
-        })();
+        };
+        deleteData();
     }, [album]);
     return {}
 }

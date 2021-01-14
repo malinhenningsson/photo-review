@@ -4,7 +4,7 @@ import { useAuthContext } from '../../contexts/AuthContext'
 import { Container, Card, Row, Col } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import DefaultFolder from '../../assets/images/default-folder-2.png'
+import DefaultFolder from '../../assets/images/default-folder.png'
 import useGetAlbums from '../../hooks/useGetAlbums';
 import useDeleteAlbum from '../../hooks/useDeleteAlbum'
 import LoadingSpinner from '../LoadingSpinner'

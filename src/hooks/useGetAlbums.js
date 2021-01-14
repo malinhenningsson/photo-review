@@ -24,7 +24,7 @@ const useGetAlbums = () => {
                 setLoading(false);
         })
         return unsubscribe;
-    }, [])
+    }, [authUser.uid])
 
     return {albums, loading}
 }

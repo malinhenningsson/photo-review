@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Alert } from 'react-bootstrap'
 import { useDropzone } from 'react-dropzone'
 import useUploadPhoto from '../../hooks/useUploadPhoto'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';

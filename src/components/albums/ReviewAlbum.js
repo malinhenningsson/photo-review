@@ -4,7 +4,7 @@ import firebase from 'firebase/app'
 import { db } from '../../firebase'
 import useGetAlbum from '../../hooks/useGetAlbum'
 import useGetPhotosInAlbum from '../../hooks/useGetPhotosInAlbum'
-import { Alert, Button, Container, Row } from 'react-bootstrap'
+import { Alert, Container, Row } from 'react-bootstrap'
 import {SRLWrapper} from "simple-react-lightbox"
 import PhotoGrid from './PhotoGrid'
 import LoadingSpinner from '../LoadingSpinner'
@@ -54,7 +54,6 @@ const ReviewAlbum = () => {
     }, [reviewedPhotos]);
 
     const handleSendReview = async () => {
-        console.log('sent review', reviewedPhotos);
         const title = `${album.title}-${Date.now()}`;
 
         setError(false);

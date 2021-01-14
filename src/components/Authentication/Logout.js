@@ -12,7 +12,7 @@ const Logout = () => {
             await logout();
             navigate('/')
         })();
-    }, []);
+    }, [logout, navigate]);
     
     return (
         <div className="text-center mt-4">
