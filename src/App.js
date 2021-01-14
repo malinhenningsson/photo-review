@@ -1,9 +1,9 @@
 import { Routes, Route } from 'react-router-dom'
 import './assets/scss/app.scss'
-import Album from './components/Albums/Album'
-import Albums from './components/Albums/Albums'
+import Album from './components/albums/Album'
+import Albums from './components/albums/Albums'
 import AuthContextProvider from './contexts/AuthContext'
-import EditAlbum from './components/Albums/EditAlbum'
+import EditAlbum from './components/albums/EditAlbum'
 import ForgotPassword from './components/Authentication/ForgotPassword'
 import Frontpage from './components/Frontpage'
 import Login from './components/Authentication/Login'
@@ -14,8 +14,8 @@ import ProtectedRoute from './components/Authentication/ProtectedRoute'
 import Register from './components/Authentication/Register'
 import SimpleReactLightbox from "simple-react-lightbox";
 import Upload from './components/upload/Upload'
-import ReviewAlbum from './components/Albums/ReviewAlbum'
-import ReviewThanks from './components/Albums/ReviewThanks'
+import ReviewAlbum from './components/albums/ReviewAlbum'
+import ReviewThanks from './components/albums/ReviewThanks'
 
 function App() {
   return (
