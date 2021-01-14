@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import { db } from '../firebase'
 
 const useGetPhotosInAlbum = (albumId) => {
-    const [photos, setPhotos] = useState([]);
 	const [loading, setLoading] = useState(true);
+    const [photos, setPhotos] = useState([]);
 	
     useEffect(() => {
 		if (!albumId) {

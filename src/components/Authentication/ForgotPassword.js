@@ -5,9 +5,10 @@ import { useAuthContext } from '../../contexts/AuthContext'
 
 const ForgotPassword = () => {
     const emailRef = useRef();
-	const [error, setError] = useState(null);
-	const [message, setMessage] = useState(null);
 	const [btnDisabled, setBtnDisabled] = useState(false);
+	const [error, setError] = useState(null);
+    const [message, setMessage] = useState(null);
+    
 	const { forgotPassword } = useAuthContext();
     
     const handleSubmit = async (e) => {
