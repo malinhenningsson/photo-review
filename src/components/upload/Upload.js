@@ -45,7 +45,7 @@ const Upload = () => {
             <Container className="px-4 mt-4 mb-5">
                 <Card text="white" className="form-box">
                     <Card.Body>
-                        <Form onSubmit={handleSubmit}>
+                        <Form onSubmit={handleSubmit} role="form">
                             <Form.Group id="title" className="mb-3">
                                 <Form.Label>Album title</Form.Label>
                                 <Form.Control 

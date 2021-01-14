@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import './assets/scss/app.scss'
 import Album from './components/Albums/Album'
 import Albums from './components/Albums/Albums'
@@ -19,66 +19,62 @@ import ReviewThanks from './components/Albums/ReviewThanks'
 
 function App() {
   return (
-	<Router>
-		<AuthContextProvider>
-			<SimpleReactLightbox>
-				<Navigation />
+	<AuthContextProvider>
+		<SimpleReactLightbox>
+			<Navigation />
 
-					<Routes>
+				<Routes>
+					<Route path="/">
+						<Frontpage />
+					</Route>
+					
+					<Route path="/register">
+						<Register />
+					</Route>
+
+					<Route path="/login">
+						<Login />
+					</Route>
+
+					<Route path="/forgot-password">
+						<ForgotPassword />
+					</Route>
+
+					<ProtectedRoute path="/logout">
+						<Logout />
+					</ProtectedRoute>
+
+					<ProtectedRoute path="/albums">
 						<Route path="/">
-							<Frontpage />
-						</Route>
-						
-						<Route path="/register">
-							<Register />
+							<Albums />
 						</Route>
 
-						<Route path="/login">
-							<Login />
+						<Route path="/edit/:albumId">
+							<EditAlbum />
 						</Route>
 
-						<Route path="/forgot-password">
-							<ForgotPassword />
+						<Route path="/:albumId">
+							<Album />
 						</Route>
+					</ProtectedRoute>
 
-						<ProtectedRoute path="/logout">
-							<Logout />
-						</ProtectedRoute>
+					<Route path="/review/:albumId">
+						<ReviewAlbum />
+					</Route>
 
-						<ProtectedRoute path="/albums">
-							<Route path="/">
-								<Albums />
-							</Route>
+					<Route path="/review/thanks">
+						<ReviewThanks />
+					</Route>
 
-							<Route path="/edit/:albumId">
-								<EditAlbum />
-							</Route>
+					<ProtectedRoute path="/upload">
+						<Upload />
+					</ProtectedRoute>
 
-							<Route path="/:albumId">
-								<Album />
-							</Route>
-						</ProtectedRoute>
+					<Route path="*" element={<NotFound />} />
 
-						<Route path="/review/:albumId">
-							<ReviewAlbum />
-						</Route>
-
-						<Route path="/review/thanks">
-							<ReviewThanks />
-						</Route>
-
-						<ProtectedRoute path="/upload">
-							<Upload />
-						</ProtectedRoute>
-
-						<Route path="*" element={<NotFound />} />
-
-					</Routes>
-			</SimpleReactLightbox>
-		</AuthContextProvider>
-	</Router>
-
-
+				</Routes>
+		</SimpleReactLightbox>
+	</AuthContextProvider>
   );
 }
 
