@@ -27,7 +27,6 @@ const Register = () => {
 		try {
 			setLoading(true);
 			// Register new user with firebase authentication
-			console.log('Sign up user: ', emailRef.current.value, passwordRef.current.value);
 			await register(emailRef.current.value, passwordRef.current.value);
 			
 			navigate('/');

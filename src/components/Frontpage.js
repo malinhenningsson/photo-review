@@ -7,7 +7,6 @@ const Frontpage = () => {
     const { authUser } = useAuthContext();
 
     return (
-        // <div className="frontpage-wrapper">
         <Jumbotron fluid>
             <Container>
                 <div className="frontpage-content">
@@ -28,7 +27,6 @@ const Frontpage = () => {
                 </div>
             </Container>
         </Jumbotron>
-        // </div>
     )
 }
 

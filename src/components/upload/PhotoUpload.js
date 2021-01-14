@@ -18,7 +18,7 @@ const PhotoUpload = ({ albumId }) => {
 		} else if (success) {
 			setMessage({
 				success: true,
-				text: 'Image successfully uploaded!',
+				text: 'Upload successful!',
 			});
 			setPhoto(null);
 		} else {

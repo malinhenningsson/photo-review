@@ -7,8 +7,6 @@ const useGetAlbum = (albumId) => {
 
 	useEffect(() => {
 		const unsubscribe = db.collection('albums').doc(albumId).get().then(doc => {
-			console.log(doc.id);
-			console.log(doc.data());
 			setAlbum({
 				id: doc.id,
 				...doc.data(),

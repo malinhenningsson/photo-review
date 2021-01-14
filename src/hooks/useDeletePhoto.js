@@ -19,7 +19,7 @@ const useDeletePhoto = (photo, albumId) => {
                         album: firebase.firestore.FieldValue.arrayRemove(db.collection('albums').doc(albumId))
                     });
                 
-                    // Check if photo exists in other albums, if not delete from database and storage
+                    // Check if photo exists in other albums, if not, delete from database and storage
                     db.collection('images').doc(item).get()
                         .then(doc => {
                             if (doc.data().album.length < 1) {
@@ -34,7 +34,7 @@ const useDeletePhoto = (photo, albumId) => {
                      album: firebase.firestore.FieldValue.arrayRemove(db.collection('albums').doc(albumId))
                  });
                 
-                // Check if photo exists in other albums, if not delete from database and storage
+                // Check if photo exists in other albums, if not, delete from database and storage
                 db.collection('images').doc(photo.id).get()
                  .then(doc => {
                      if (doc.data().album.length < 1) {
