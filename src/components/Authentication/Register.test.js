@@ -1,12 +1,12 @@
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
-import { act, render, screen } from '@testing-library/react'
+import { render, act, screen } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
-import EditAlbum from './EditAlbum'
+import Register from './Register'
 import { AuthContext } from '../../contexts/AuthContext'
 
-it('renders album form for authenticated users', async () => {
+it('input value for email is required when registering', async () => {
     const history = createMemoryHistory();
     window.history.pushState({}, '', '/');
 
@@ -14,11 +14,11 @@ it('renders album form for authenticated users', async () => {
         render(
             <BrowserRouter history={history}>
                 <AuthContext.Provider value={{ authUser: { uid: 'teXukZIq8MQevSrM17VtTxcE8nO2' }}}>
-                    <EditAlbum />
+                    <Register />
                 </AuthContext.Provider>
             </BrowserRouter>
         )
     })
 
-    expect(screen.getByRole('heading', {name: "Edit album"})).toBeInTheDocument();
+    expect(screen.getByLabelText('email')).toHaveAttribute('required');
 })

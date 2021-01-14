@@ -20,5 +20,5 @@ it('renders upload form for autheticated user', async () => {
         )
     })
 
-    expect(screen.getByRole('button', {type: "submit"})).toBeInTheDocument();
+    expect(screen.getByRole('button')).toHaveAttribute('type', 'submit');
 })
